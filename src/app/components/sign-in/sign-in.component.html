@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row mt-4">
+    <div class="col-4 mx-auto">
+      <div class="displayTable">
+        <div class="displayTableCell">
+          <h3>Welcome to Juno!</h3>
+          <hr>
+          <form>
+            <div class="authBlock">
+              <h5>Sign In</h5>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Username" #userName required>
+              </div>
+
+              <div class="form-group">
+                <input type="password" class="form-control" placeholder="Password" #userPassword required>
+              </div>
+              <div class="forgotPassword">
+                <button type="button" id="forgot-pwd" class="btn btn-link" routerLink="/forgot-password">Forgot Password?</button>
+                
+              </div>
+              <!-- Calling SignIn Api from AuthService -->
+              <div class="form-group">
+                <button button type="button" id="signin-btn" class="btn btn-primary"
+                  (click)="authService.SignIn(userName.value, userPassword.value)">Log in</button>
+              </div>
+
+              <div class="form-group">
+                <span class="or"><span class="orInner">Or</span></span>
+              </div>
+
+              <!-- Calling GoogleAuth Api from AuthService -->
+              <div class="form-group">
+                <a type="button" id="google-btn" class="btn btn-lg btn-google btn-block btn-outline" href="#"
+                  (click)="authService.GoogleAuth()"><img src="https://img.icons8.com/color/16/000000/google-logo.png">
+                  Log in with Google
+                </a>
+              </div>
+
+              
+            </div>
+
+            <div class="redirectToLogin">
+              <span>Don't have an account?<button type="button" class="btn btn-link" routerLink="/register-user"> Sign
+                  Up</button></span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

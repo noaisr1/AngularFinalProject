@@ -1,0 +1,29 @@
+.form-control{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#signup-btn{
+    margin-bottom: 10px;
+    padding: 5px;
+    height: 40px;
+}
+#google-btn{
+    font-size:15px;
+    border: 1px solid black;
+    padding: 5px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+#ageDropdown{
+    overflow-y: scroll;
+}
+
+.custom-control-label{
+    padding: 2px;
+    margin-right: 40px;
+    margin-inline-start: auto;
+}
+.custom-control-input{
+    padding: 3px;
+}

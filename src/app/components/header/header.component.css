@@ -1,0 +1,17 @@
+.jumbotron{
+    background-size: cover;
+    border-radius: 0;
+    margin-bottom: 0;
+    background-color: rgb(37, 71, 163);
+}
+.jumbotron h1{
+    font-size: 3.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+    color: #fff;
+    margin-bottom: 0px;
+    
+}
+.center{
+    text-align: center;
+}
