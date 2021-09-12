@@ -1,7 +1,7 @@
 
   <!-- Sidebar navigation -->
   <div class="container-fluid">
-    <div class="row position-fixed h-100 w-100">
+    <div class="row position-relative h-100 w-100">
   
       <nav class="col-2 bg-dark pos-fixed">
         <div class="sidebar-sticky">
@@ -29,7 +29,7 @@
             <h1 class="h2">User Profile</h1>
           </div>
           <!-- Show user data when logged in -->
-          <div class="row" *ngIf="authService.userData as user">
+          <div class="row" *ngIf="authService.currentUser as user">
             <div class="col-md-12">
               <div class="media">
                 <img class="align-self-start mr-5 img-thumbnail rounded-circle" src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"

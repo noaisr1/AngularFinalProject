@@ -15,7 +15,9 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 import { AuthService } from './shared/services/auth.service';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +37,11 @@ import { FormsModule } from '@angular/forms';
     AngularFirestoreModule,
     AngularFireStorageModule,
     FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule,
+    CommonModule
+
+  
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

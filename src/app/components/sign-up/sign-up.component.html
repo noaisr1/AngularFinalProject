@@ -1,107 +1,117 @@
-<div class="container">
+<div class="container mt-5 myContainer mx-auto">
   <div class="row">
-    <div class="col-8 mx-auto">
-
-      <div class="displayTable">
+    <div class="col">
+      <div class="fill-style-1">
         <div class="displayTableCell">
-
-          <div class="px-logo">
-            <a href="https://www.positronx.io" target="_blank">
-              <img src="https://www.positronx.io/wp-content/themes/positronx/img/logo-positronx-white.svg"
-                alt="positronX.io - Learn Full Stack Development">
-            </a>
-          </div>
-
           <div class="authBlock">
             <h3>Sign Up</h3>
+            <form [formGroup]="form" (ngSubmit)="signUp()" class="sign-up-form">
 
-            <div class="form-group">
-              <input type="email" class="form-control" placeholder="Email Address" #userEmail required>
-            </div>
+              <!-- All users fields -->
 
-            <!-- My code -->
-
-            <div class="form-group">
-              <input type="fname" class="form-control" placeholder="First name" #userFirstName required>
-            </div>
-
-            <div class="form-group">
-              <input type="lname" class="form-control" placeholder="Last name" #userLastName required>
-            </div>
-
-            <h6>
-              Select tourism type:
-            </h6>
-            <div class="form-group">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="culinaryCheck">
-              <label class="custom-control-label" for="culinaryCheck">Culinary</label>
-              <input type="checkbox" class="custom-control-input" id="artCheck">
-              <label class="custom-control-label" for="artCheck">Art</label>
-              <input type="checkbox" class="custom-control-input" id="nightLifeCheck">
-              <label class="custom-control-label" for="nightLifeCheck">Night life</label>
-              <input type="checkbox" class="custom-control-input" id="sportsCheck">
-              <label class="custom-control-label" for="sportsCheck">Sports</label>
-              <input type="checkbox" class="custom-control-input" id="businessCheck">
-              <label class="custom-control-label" for="businessCheck">Business</label>
-              <input type="checkbox" class="custom-control-input" id="natureCheck">
-              <label class="custom-control-label" for="natureCheck">Nature</label>
-              <input type="checkbox" class="custom-control-input" id="historicalCheck">
-              <label class="custom-control-label" for="historicalCheck">Historical</label>
-            </div>
-          </div>
-
-            <div class="form-group">
-              <h6>Your age:</h6>
-              <select [(ngModel)]="selectedAge" class="dropdown-toggle" id="ageDropdown" data-toggle="dropdown" value="age" #userAge>
-                <option *ngFor="let age of ages" [value]="ages[age]">
-                  {{age}}
-                </option>
-              </select>
-            </div>
-
-
-
-
-            <!-- <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Tourism type
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Culinary</a>
-                <a class="dropdown-item" href="#">Art</a>
-                <a class="dropdown-item" href="#">Night life</a>
-                <a class="dropdown-item" href="#">Sports</a>
-                <a class="dropdown-item" href="#">Business</a>
-                <a class="dropdown-item" href="#">Nature</a>
-                <a class="dropdown-item" href="#">Historical</a>
+              <div class="form-group">
+                <input type="email" class="form-control" formControlName="email" placeholder="Email Address">
+                <div class="mt-2 text-danger"></div>
               </div>
-            </div> -->
 
+              <div class="form-group">
+                <input type="password" class="form-control" formControlName="password" placeholder="Password">
+                <div class="mt-4 text-danger"></div>
+              </div>
 
+              <div class="form-group">
+                <input type="text" class="form-control" formControlName="firstName" placeholder="First Name">
+                <div class="mt-2 text-danger"></div>
+              </div>
 
-            <!-- My code -->
-            <div class="form-group">
-              <input type="password" class="form-control" placeholder="Password" #userPwd required>
+              <div class="form-group">
+                <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name">
+                <div class="mt-2 text-danger"></div>
+              </div>
+
+              <div class="form-group">
+                <input type="number" class="form-control" formControlName="phoneNumber" placeholder="Phone Number">
+                <div class="mt-2 text-danger"></div>
+              </div>
+
+              <div class="form-group">
+                <input id="tourist" type="radio" value="Tourist" formControlName="userType">
+                <label class="custom-control-label" for="tourist">Tourist</label>
+
+                <input id="guide" type="radio" value="Guide" formControlName="userType">
+                <label class="custom-control-label" for="female">Guide</label>
+              </div>
+
+              <div class="form-group">
+                <p>Do you have a car?</p>
+                <input id="no" type="radio" value="Yes" formControlName="hasCar">
+                <label class="custom-control-label" for="yes">Yes</label>
+
+                <input id="no" type="radio" value="No" formControlName="hasCar">
+                <label class="custom-control-label" for="no">No</label>
+              </div>
+
+              <!-- Only Guides fields -->
+
+              <div class="col">
+                <div class="costum-form-part" *ngIf="guideFlag">
+                  <div class="form-group">
+                    <h6>Your age:</h6>
+                    <select [(ngModel)]="selectedAge" class="dropdown-toggle form-control" formControlName="age"
+                      id="ageDropdown" data-toggle="dropdown" value="age">
+                      <option *ngFor="let age of ages" [value]="ages[age]">
+                        {{age}}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <h6>Please select your specialties: </h6>
+                    <ng-select [multiple]="true" [items]="tourismTypes" class="form-control"
+                      formControlName="selectedTourismTypes" placeholder="Select tourism types" bindLabel="name">
+                      <ng-template ng-header-tmp let-items="items">
+                        <input type="checkbox"
+                          [checked]="this.form.get('selectedTourismTypes').value?.length === tourismTypes.length "
+                          (change)="toggleCheckAll($event)" />
+                        {{this.form.get('selectedTourismTypes').value?.length === tourismTypes.length? 'Deselect':
+                        'Select'}} All
+                      </ng-template>
+
+                      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                        <div class="ng-value" *ngFor="let item of items | slice:0:2">
+                          <span class="ng-value-label">{{item}}</span>
+                          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">x</span>
+                        </div>
+                        <div class="ng-value" *ngIf="items.length > 2">
+                          <span class="ng-value-label">{{items.length-2}} more ... </span>
+                        </div>
+                      </ng-template>
+
+                      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                        <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />
+                        {{item}}
+                      </ng-template>
+
+                      <ng-template ng-footer-tmp>
+                        <button (click)="selectAll()" class="btn btn-sm btn-secondary">Apply</button>
+                        <button (click)="unselectAll()" class="btn btn-sm btn-secondary">Cancel</button>
+                      </ng-template>
+
+                    </ng-select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <button [disabled]="form.invalid" class="btn btn-primary submit-button" type="submit">Sign Up
+                  </button>
+                </div>
+              </div>
+            </form>
+            <div class="redirectToLogin">
+              <span>Already have an account? <span class="redirect btn-link" routerLink="/sign-in">Sign In</span></span>
             </div>
-
-            <div class="form-group">
-              <button type="button" id="signup-btn" class="btn btn-primary"
-                (click)="authService.SignUp(userEmail.value, userPwd.value)">Sign Up</button>
-            </div>
-
-            <div class="formGroup">
-              <span class="or"><span class="orInner">Or</span></span>
-            </div>
-
-          </div>
-
-          <div class="redirectToLogin">
-            <span>Already have an account? <button type="button" class="btn btn-link" routerLink="/sign-in">Log
-                In</button></span>
           </div>
         </div>
-
       </div>
     </div>
   </div>

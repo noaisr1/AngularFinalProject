@@ -79,7 +79,8 @@ export class AuthService {
               lastName: userData.lastName,
               phoneNumber: userData.phoneNumber,
               tourist: userData.tourist,
-              guide: userData.guide
+              guide: userData.guide,
+              hasCar: userData.hasCar
             }).then(value => {
               this.afs.collection<UserData>('users')
                 .doc<UserData>(res.user.uid)
@@ -90,24 +91,9 @@ export class AuthService {
                     this.currentUser$.next(user);
                   }
                   if ( user.tourist ) {
-                    this.afs.collection('tourists').doc(user.uid)
-                    .set({
-                      userData: user,
-                      tourismType: (user.specialData as Tourist).tourismType,
-                      groupType: (user.specialData as Tourist).groupType,
-                      language: (user.specialData as Tourist).language,
-                      hasCar: user.specialData.hasCar
-                    })
+                    this.AddTourist(user);
                   }else if ( user.guide ) {
-                    this.afs.collection('guides').doc(user.uid)
-                    .set({
-                      userData: user,
-                      age: (user.specialData as Guide).age,
-                      tourismTypes: (user.specialData as Guide).tourismTypes,
-                      languages: (user.specialData as Guide).languages,
-                      hasCar: (user.specialData as Guide).hasCar,
-                    })
-                    
+                    this.AddGuide(user)
                   }
                   this.SendVerificationMail();
                 });
@@ -153,6 +139,33 @@ export class AuthService {
       this.currentUser$.next(this.currentUser);
       this.router.navigate(['sign-in']);
 
+    })
+  }
+
+  AddTourist(user: UserData) {
+    const touristRef: AngularFirestoreDocument<any> = this.afs.doc(`tourists/${user.uid}`);
+    const data: Tourist = {
+      userData: user,
+      tourismType: (user.specialData as Tourist).tourismType,
+      groupType: (user.specialData as Tourist).groupType,
+      language: (user.specialData as Tourist).language,
+    }
+    return touristRef.set(data, {
+      merge: true
+    })
+  }
+
+  AddGuide(user: UserData) {
+    const guideRef: AngularFirestoreDocument<any> = this.afs.doc(`guides/${user.uid}`);
+    const data: Guide = {
+      userData: user,
+      age: (user.specialData as Guide).age,
+      tourismTypes: (user.specialData as Guide).tourismTypes,
+      languages: (user.specialData as Guide).languages,
+      hasPoliceCertification: (user.specialData as Guide).hasPoliceCertification
+    }
+    return guideRef.set(data, {
+      merge: true
     })
   }
 

@@ -1,4 +1,4 @@
-export interface UserData {
+export class UserData {
     uid: string;
     email: string;
     firstName: string;
@@ -8,7 +8,8 @@ export interface UserData {
     phoneNumber: number;
     tourist?: boolean;
     guide?: boolean;
-    specialData: Tourist | Guide;
+    hasCar: boolean;
+    specialData?:Tourist | Guide;
 }
 
 export interface Tourist {
@@ -16,7 +17,6 @@ export interface Tourist {
     tourismType: string;
     groupType: string;
     language: string;
-    hasCar: boolean;
 }
 
 export interface Guide {
@@ -24,7 +24,6 @@ export interface Guide {
     age: number;
     tourismTypes: string[];
     languages: string[];
-    hasCar: boolean;
     hasPoliceCertification: boolean;
 
 }
