@@ -13,7 +13,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 export class AuthService {
   private _userData: Observable<firebase.User>; // Save logged in user data
-  public currentUser: any;
+  public currentUser: UserData | null;
   private currentUser$ = new BehaviorSubject<UserData>(null);
 
   constructor(
@@ -26,16 +26,16 @@ export class AuthService {
     this._userData = afAuth.authState;
     this._userData.subscribe(user => {
       if (user) {
-        this.afs.collection<UserData>('users')
-          .doc<UserData>(user.uid)
-          .valueChanges()
-          .subscribe(currentUser => {
-            this.currentUser = currentUser;
-            this.currentUser.uid = user.uid;
-            this.currentUser$.next(currentUser);
+        this.afs.collection<UserData>('users', ref => ref.where('email','==',user.email)).valueChanges()
+          .subscribe(users => {
+            this.currentUser = users[0];
+            this.currentUser$.next(users[0]);
           });
       }
     })
+  }
+  CurrentUser(): Observable<UserData> {
+    return this.currentUser$.asObservable();
   }
 
   // Sign in with email/password

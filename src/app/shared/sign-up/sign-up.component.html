@@ -30,6 +30,19 @@
               </div>
 
               <div class="form-group">
+                <span>Upload photo:</span>
+                <input [attr.disabled]=" (form.get('firstName').valid && form.get('lastName').valid)? null: true" type="file" class="form-control" formControlName="userPhoto" (change)="onUpload($event)" accept=".png,.jpg">
+                <progress max="100" [value]="(uploadProgress| async)"></progress>
+                <div class="result" *ngIf="photoURL | async; let uploadSrc">
+                  <a [href]="uploadSrc">You just uploaded this file!</a>
+                </div>
+                
+                <div class="container" *ngIf="photoURL | async; let url">
+                    <img [src]="url" alt="Image from AngularFireStorage">
+                </div>
+              </div>
+
+              <div class="form-group">
                 <input type="number" class="form-control" formControlName="phoneNumber" placeholder="Phone Number">
                 <div class="mt-2 text-danger"></div>
               </div>

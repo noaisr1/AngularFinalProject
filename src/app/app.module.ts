@@ -20,6 +20,8 @@ import { HeaderComponent } from './core/header/header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CommonModule } from '@angular/common';
+import { TouristHomePageComponent } from './shared/tourist/components/tourist-home-page/tourist-home-page.component';
+import { GuideHomePageComponent } from './shared/guide/components/guide-home-page/guide-home-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +31,9 @@ import { CommonModule } from '@angular/common';
     ForgotPasswordComponent,
     VerifyEmailComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    TouristHomePageComponent,
+    GuideHomePageComponent
   ],
   imports: [
     BrowserModule,
