@@ -5,16 +5,18 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
-import { AppRoutingModule } from './shared/routing/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { SignInComponent } from './components/sign-in/sign-in.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
-import { AuthService } from './shared/services/auth.service';
-import { FooterComponent } from './components/footer/footer.component';
-import { HeaderComponent } from './components/header/header.component';
+import { DashboardComponent } from './shared/dashboard/dashboard.component';
+import { SignInComponent } from './shared/sign-in/sign-in.component';
+import { SignUpComponent } from './shared/sign-up/sign-up.component';
+import { ForgotPasswordComponent } from './shared/forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './shared/verify-email/verify-email.component';
+import { AuthService } from './shared/auth/auth.service';
+import { GuideService } from './shared/guide/service/guide.service';
+import { TouristService } from './shared/tourist/service/tourist.service';
+import { FooterComponent } from './core/footer/footer.component';
+import { HeaderComponent } from './core/header/header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CommonModule } from '@angular/common';
@@ -43,7 +45,7 @@ import { CommonModule } from '@angular/common';
 
   
   ],
-  providers: [AuthService],
+  providers: [AuthService, TouristService, GuideService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

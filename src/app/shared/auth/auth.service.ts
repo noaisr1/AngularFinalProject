@@ -1,6 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Tourist, UserData, Guide } from "../services/user";
-import firebase, { auth, User } from 'firebase/app';
+import { Guide } from "../guide/service/guide.service";
+import { Tourist } from '../tourist/service/tourist.service';
+import firebase from 'firebase/app';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from "@angular/router";
@@ -109,7 +110,7 @@ export class AuthService {
 
 
   SignUpTourist(userData: UserData, password: string, tourist: Tourist) {
-    let uid = this.createUid(userData.firstName, userData.lastName);
+    let uid = this.generateUid(userData.firstName, userData.lastName);
     console.log(uid);
     this.afAuth.createUserWithEmailAndPassword(userData.email, password)
       .then(res => {
@@ -156,7 +157,7 @@ export class AuthService {
   }
 
   SignUpGuide(userData: UserData, password: string, guide: Guide) {
-    let uid = this.createUid(userData.firstName, userData.lastName);
+    let uid = this.generateUid(userData.firstName, userData.lastName);
     console.log(uid);
     this.afAuth.createUserWithEmailAndPassword(userData.email, password)
       .then(res => {
@@ -205,7 +206,20 @@ export class AuthService {
 
   }
 
-  createUid(firstName: string, lastName: string): string {
+  generateUid(firstName: string, lastName: string): string {
     return firstName.charAt(0) + '.' + lastName;
   }
+}
+
+export class UserData {
+  uid: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  photoURL: string;
+  emailVerified: string;
+  phoneNumber: number;
+  tourist?: boolean;
+  guide?: boolean;
+  hasCar: boolean;
 }

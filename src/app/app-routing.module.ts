@@ -4,12 +4,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Import all the components for which navigation service has to be activated
-import { SignInComponent } from '../../components/sign-in/sign-in.component';
-import { SignUpComponent } from '../../components/sign-up/sign-up.component';
-import { DashboardComponent } from '../../components/dashboard/dashboard.component';
-import { ForgotPasswordComponent } from '../../components/forgot-password/forgot-password.component';
-import { AuthGuard } from '../guard/auth.guard';
-import { VerifyEmailComponent } from '../../components/verify-email/verify-email.component';
+import { SignInComponent } from './shared/sign-in/sign-in.component';
+import { SignUpComponent } from './shared/sign-up/sign-up.component';
+import { DashboardComponent } from './shared/dashboard/dashboard.component';
+import { ForgotPasswordComponent } from './shared/forgot-password/forgot-password.component';
+import { AuthGuard } from './shared/guard/auth.guard';
+import { VerifyEmailComponent } from './shared/verify-email/verify-email.component';
 
 
 const routes: Routes = [

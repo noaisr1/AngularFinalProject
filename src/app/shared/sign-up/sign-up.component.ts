@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { Guide, Tourist, UserData } from 'src/app/shared/services/user';
+import { AuthService } from 'src/app/shared/auth/auth.service';
+import { UserData } from 'src/app/shared/auth/auth.service';
+import { Guide } from 'src/app/shared/guide/service/guide.service';
+import { Tourist } from 'src/app/shared/tourist/service/tourist.service';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
