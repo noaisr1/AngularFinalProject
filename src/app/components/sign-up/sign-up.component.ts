@@ -45,9 +45,9 @@ export class SignUpComponent implements OnInit {
       hasCar: ['', [Validators.required]],
 
       // Guide form fields
-      age: ['', [Validators.required]],
+      age: ['', this.guideFlag==true? [Validators.required]: []],
       selectedTourismTypes: [],
-      hasPoliceCertification: ['', [Validators.required]],
+      hasPoliceCertification: ['', this.guideFlag==true? [Validators.required]: []],
       selectedLanguagesForm: [],
 
       // Tourist form fields
@@ -135,7 +135,7 @@ export class SignUpComponent implements OnInit {
         this.hasPoliceCertification.value == true? guide.hasPoliceCertification == true: guide.hasPoliceCertification = false;
         guide.languages = this.selectedLanguages;
         guide.tourismTypes = this.selectedTypes;
-        this.authService.AddGuide(this.user, this.form.get('password').value, guide);
+        this.authService.SignUpGuide(this.user, this.form.get('password').value, guide);
       }
       if(this.user.tourist) {
         let tourist = new Tourist();
@@ -143,7 +143,7 @@ export class SignUpComponent implements OnInit {
         tourist.groupType = this.selectedGroupType;
         tourist.language = this.selectedLanguage;
         tourist.tourismType = this.selectedType;
-        this.authService.AddTourist(tourist);
+        this.authService.SignUpTourist(this.user, this.form.get('password').value, tourist);
       }
     }
     return true;

@@ -23,16 +23,16 @@ export class AuthService {
   ) {
     // Getting data of logged in user:
     this._userData = afAuth.authState;
-    this._userData.subscribe( user => {
-      if( user ) {
+    this._userData.subscribe(user => {
+      if (user) {
         this.afs.collection<UserData>('users')
-        .doc<UserData>(user.uid)
-        .valueChanges()
-        .subscribe( currentUser => {
-          this.currentUser = currentUser;
-          this.currentUser.uid = user.uid;
-          this.currentUser$.next(currentUser);
-        });
+          .doc<UserData>(user.uid)
+          .valueChanges()
+          .subscribe(currentUser => {
+            this.currentUser = currentUser;
+            this.currentUser.uid = user.uid;
+            this.currentUser$.next(currentUser);
+          });
       }
     })
   }
@@ -51,11 +51,11 @@ export class AuthService {
             console.log(user);
             this.currentUser = user;
             this.currentUser$.next(this.currentUser);
-            if( ! firebase.auth().currentUser.emailVerified){
+            if (!firebase.auth().currentUser.emailVerified) {
               window.alert("Please Verify Your Email Account");
               this.router.navigate(['sign-in']);
             }
-            else{
+            else {
               this.router.navigate(['dashboard']);
             }
           });
@@ -65,41 +65,6 @@ export class AuthService {
       });
   }
 
-  // Sign up with email/password
-  SignUp( userData: UserData, password: string ) {
-    console.log(userData.email, password);
-
-     this.afAuth.createUserWithEmailAndPassword(userData.email, password)
-      .then(res => {
-        if (res) {
-          this.afs.collection('users').doc(res.user.uid)
-            .set({
-              email: userData.email,
-              firstName: userData.firstName,
-              lastName: userData.lastName,
-              phoneNumber: userData.phoneNumber,
-              tourist: (userData.tourist == undefined)? false: userData.tourist,
-              guide: (userData.guide == undefined)? false: userData.guide,
-              hasCar: userData.hasCar
-            }).then(value => {
-              this.afs.collection<UserData>('users')
-                .doc<UserData>(res.user.uid)
-                .valueChanges()
-                .subscribe(user => {
-                  console.log(user);
-                  if (user) {
-                    this.currentUser$.next(user);
-                  }
-                  this.SendVerificationMail();
-                });
-            });
-        }
-      })
-      .catch((error) => {
-        console.log(`Something went wrong ${error.message}`);
-        window.alert(error);
-      })
-  }
 
   get userData(): Observable<firebase.User> {
     return this._userData;
@@ -137,20 +102,13 @@ export class AuthService {
     })
   }
 
-  AddTourist(tourist: Tourist) {
-    const touristRef: AngularFirestoreDocument<any> = this.afs.doc(`tourists/${this.currentUser.uid}`);
-    const data: Tourist = {
-      email: tourist.email,
-      tourismType: tourist.tourismType,
-      groupType: tourist.groupType,
-      language: tourist.language,
-    }
-    return touristRef.set(data, {
-      merge: true
-    })
-  }
+  /**
+   * SignUp functions add user to 'users' collection,
+   * and tourist/guide with the same uid to the matching collection (tourists/guides) 
+   */
 
-  AddGuide(userData:UserData, password: string, guide: Guide) {
+
+  SignUpTourist(userData: UserData, password: string, tourist: Tourist) {
     let uid = this.createUid(userData.firstName, userData.lastName);
     console.log(uid);
     this.afAuth.createUserWithEmailAndPassword(userData.email, password)
@@ -162,8 +120,8 @@ export class AuthService {
               firstName: userData.firstName,
               lastName: userData.lastName,
               phoneNumber: userData.phoneNumber,
-              tourist: (userData.tourist == undefined)? false: userData.tourist,
-              guide: (userData.guide == undefined)? false: userData.guide,
+              tourist: (userData.tourist == undefined) ? false : userData.tourist,
+              guide: (userData.guide == undefined) ? false : userData.guide,
               hasCar: userData.hasCar
             }).then(value => {
               this.afs.collection<UserData>('users')
@@ -174,8 +132,55 @@ export class AuthService {
                   if (user) {
                     this.currentUser$.next(user);
                   }
-                  const guideRef:  AngularFirestoreDocument<any> = this.afs.doc(`guides/${uid}`);
-    
+                  const touristRef: AngularFirestoreDocument<any> = this.afs.doc(`tourists/${uid}`);
+                  const data: Tourist = {
+                    email: tourist.email,
+                    tourismType: tourist.tourismType,
+                    groupType: tourist.groupType,
+                    language: tourist.language,
+                  }
+                  touristRef.set(data, {
+                    merge: true
+                  })
+                  touristRef.delete;
+                  this.SendVerificationMail();
+                });
+            });
+        }
+      })
+      .catch((error) => {
+        console.log(`Something went wrong ${error.message}`);
+        window.alert(error);
+      })
+
+  }
+
+  SignUpGuide(userData: UserData, password: string, guide: Guide) {
+    let uid = this.createUid(userData.firstName, userData.lastName);
+    console.log(uid);
+    this.afAuth.createUserWithEmailAndPassword(userData.email, password)
+      .then(res => {
+        if (res) {
+          this.afs.collection('users').doc(uid)
+            .set({
+              email: userData.email,
+              firstName: userData.firstName,
+              lastName: userData.lastName,
+              phoneNumber: userData.phoneNumber,
+              tourist: (userData.tourist == undefined) ? false : userData.tourist,
+              guide: (userData.guide == undefined) ? false : userData.guide,
+              hasCar: userData.hasCar
+            }).then(value => {
+              this.afs.collection<UserData>('users')
+                .doc<UserData>(uid)
+                .valueChanges()
+                .subscribe(user => {
+                  console.log(user);
+                  if (user) {
+                    this.currentUser$.next(user);
+                  }
+                  const guideRef: AngularFirestoreDocument<any> = this.afs.doc(`guides/${uid}`);
+
                   const data: Guide = {
                     email: guide.email,
                     age: guide.age,
@@ -183,9 +188,9 @@ export class AuthService {
                     languages: guide.languages,
                     hasPoliceCertification: guide.hasPoliceCertification
                   }
-                  
+
                   guideRef.set(data, {
-                      merge: true
+                    merge: true
                   });
                   guideRef.delete;
                   this.SendVerificationMail();
@@ -197,10 +202,10 @@ export class AuthService {
         console.log(`Something went wrong ${error.message}`);
         window.alert(error);
       })
-      
+
   }
 
   createUid(firstName: string, lastName: string): string {
-    return firstName.charAt(0)+'.'+lastName;
+    return firstName.charAt(0) + '.' + lastName;
   }
 }
