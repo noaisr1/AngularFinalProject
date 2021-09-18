@@ -9,18 +9,19 @@ export class UserData {
     tourist?: boolean;
     guide?: boolean;
     hasCar: boolean;
-    specialData?:Tourist | Guide;
 }
 
-export interface Tourist {
-    userData: UserData;
+export class Tourist {
+    uid?: string;
+    email: string;
     tourismType: string;
     groupType: string;
     language: string;
 }
 
-export interface Guide {
-    userData: UserData;
+export class Guide {
+    uid?: string;
+    email: string;
     age: number;
     tourismTypes: string[];
     languages: string[];

@@ -13,6 +13,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AuthService {
   private _userData: Observable<firebase.User>; // Save logged in user data
   public currentUser: any;
+  private uid: string;
   private currentUser$ = new BehaviorSubject<UserData>(null);
 
   constructor(
@@ -69,8 +70,10 @@ export class AuthService {
   SignUp( userData: UserData, password: string ) {
     console.log(userData.email, password);
 
-    this.afAuth.createUserWithEmailAndPassword(userData.email, password)
+     this.afAuth.createUserWithEmailAndPassword(userData.email, password)
       .then(res => {
+        console.log(res);
+        this.uid = res.user.uid;
         if (res) {
           this.afs.collection('users').doc(res.user.uid)
             .set({
@@ -78,8 +81,8 @@ export class AuthService {
               firstName: userData.firstName,
               lastName: userData.lastName,
               phoneNumber: userData.phoneNumber,
-              tourist: userData.tourist,
-              guide: userData.guide,
+              tourist: (userData.tourist == undefined)? false: userData.tourist,
+              guide: (userData.guide == undefined)? false: userData.guide,
               hasCar: userData.hasCar
             }).then(value => {
               this.afs.collection<UserData>('users')
@@ -89,11 +92,6 @@ export class AuthService {
                   console.log(user);
                   if (user) {
                     this.currentUser$.next(user);
-                  }
-                  if ( user.tourist ) {
-                    this.AddTourist(user);
-                  }else if ( user.guide ) {
-                    this.AddGuide(user)
                   }
                   this.SendVerificationMail();
                 });
@@ -142,31 +140,66 @@ export class AuthService {
     })
   }
 
-  AddTourist(user: UserData) {
-    const touristRef: AngularFirestoreDocument<any> = this.afs.doc(`tourists/${user.uid}`);
+  AddTourist(tourist: Tourist) {
+    const touristRef: AngularFirestoreDocument<any> = this.afs.doc(`tourists/${this.currentUser.uid}`);
     const data: Tourist = {
-      userData: user,
-      tourismType: (user.specialData as Tourist).tourismType,
-      groupType: (user.specialData as Tourist).groupType,
-      language: (user.specialData as Tourist).language,
+      email: tourist.email,
+      tourismType: tourist.tourismType,
+      groupType: tourist.groupType,
+      language: tourist.language,
     }
     return touristRef.set(data, {
       merge: true
     })
   }
 
-  AddGuide(user: UserData) {
-    const guideRef: AngularFirestoreDocument<any> = this.afs.doc(`guides/${user.uid}`);
-    const data: Guide = {
-      userData: user,
-      age: (user.specialData as Guide).age,
-      tourismTypes: (user.specialData as Guide).tourismTypes,
-      languages: (user.specialData as Guide).languages,
-      hasPoliceCertification: (user.specialData as Guide).hasPoliceCertification
-    }
-    return guideRef.set(data, {
-      merge: true
-    })
+  AddGuide(userData:UserData, password: string, guide: Guide) {
+    this.afAuth.createUserWithEmailAndPassword(userData.email, password)
+      .then(res => {
+        console.log(res);
+        this.uid = res.user.uid;
+        if (res) {
+          this.afs.collection('users').doc(res.user.uid)
+            .set({
+              email: userData.email,
+              firstName: userData.firstName,
+              lastName: userData.lastName,
+              phoneNumber: userData.phoneNumber,
+              tourist: (userData.tourist == undefined)? false: userData.tourist,
+              guide: (userData.guide == undefined)? false: userData.guide,
+              hasCar: userData.hasCar
+            }).then(value => {
+              this.afs.collection<UserData>('users')
+                .doc<UserData>(res.user.uid)
+                .valueChanges()
+                .subscribe(user => {
+                  console.log(user);
+                  if (user) {
+                    this.currentUser$.next(user);
+                  }
+                  const guideRef:  AngularFirestoreDocument<any> = this.afs.doc(`guides/${this.uid}`);
+    
+                  const data: Guide = {
+                    email: guide.email,
+                    age: guide.age,
+                    tourismTypes: guide.tourismTypes,
+                    languages: guide.languages,
+                    hasPoliceCertification: guide.hasPoliceCertification
+                  }
+                  
+                  guideRef.set(data, {
+                      merge: true
+                  });
+                  guideRef.delete;
+                  this.SendVerificationMail();
+                });
+            });
+        }
+      })
+      .catch((error) => {
+        console.log(`Something went wrong ${error.message}`);
+        window.alert(error);
+      })
+      
   }
-
 }
