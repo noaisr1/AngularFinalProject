@@ -13,7 +13,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AuthService {
   private _userData: Observable<firebase.User>; // Save logged in user data
   public currentUser: any;
-  private uid: string;
   private currentUser$ = new BehaviorSubject<UserData>(null);
 
   constructor(
@@ -72,8 +71,6 @@ export class AuthService {
 
      this.afAuth.createUserWithEmailAndPassword(userData.email, password)
       .then(res => {
-        console.log(res);
-        this.uid = res.user.uid;
         if (res) {
           this.afs.collection('users').doc(res.user.uid)
             .set({
@@ -154,12 +151,12 @@ export class AuthService {
   }
 
   AddGuide(userData:UserData, password: string, guide: Guide) {
+    let uid = this.createUid(userData.firstName, userData.lastName);
+    console.log(uid);
     this.afAuth.createUserWithEmailAndPassword(userData.email, password)
       .then(res => {
-        console.log(res);
-        this.uid = res.user.uid;
         if (res) {
-          this.afs.collection('users').doc(res.user.uid)
+          this.afs.collection('users').doc(uid)
             .set({
               email: userData.email,
               firstName: userData.firstName,
@@ -170,14 +167,14 @@ export class AuthService {
               hasCar: userData.hasCar
             }).then(value => {
               this.afs.collection<UserData>('users')
-                .doc<UserData>(res.user.uid)
+                .doc<UserData>(uid)
                 .valueChanges()
                 .subscribe(user => {
                   console.log(user);
                   if (user) {
                     this.currentUser$.next(user);
                   }
-                  const guideRef:  AngularFirestoreDocument<any> = this.afs.doc(`guides/${this.uid}`);
+                  const guideRef:  AngularFirestoreDocument<any> = this.afs.doc(`guides/${uid}`);
     
                   const data: Guide = {
                     email: guide.email,
@@ -201,5 +198,9 @@ export class AuthService {
         window.alert(error);
       })
       
+  }
+
+  createUid(firstName: string, lastName: string): string {
+    return firstName.charAt(0)+'.'+lastName;
   }
 }
