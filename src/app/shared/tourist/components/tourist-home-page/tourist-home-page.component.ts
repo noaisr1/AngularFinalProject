@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Guide } from 'src/app/shared/guide/service/guide.service';
+import { TouristService } from '../../service/tourist.service';
 
 @Component({
   selector: 'app-tourist-home-page',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TouristHomePageComponent implements OnInit {
 
-  constructor() { }
+  public guidesArray: Guide[] = [];
+  constructor(private touristService: TouristService) { }
 
   ngOnInit(): void {
+    this.touristService.guides.subscribe( (guides: Guide) => {
+      this.guidesArray.push(guides);
+    })
   }
 
 }

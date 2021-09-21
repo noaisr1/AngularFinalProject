@@ -1,0 +1,21 @@
+.home-page-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+#userImage {
+    border-radius:100px;
+    height: 200px;
+    width: 200px;
+}
+
+.img-wrapper {
+    align-self: flex-end;
+    padding-top: 10px;
+}
+
+.welcome-msg { 
+    font-size: 20px;
+    font-style: bold;
+    padding-top: 10px;
+}

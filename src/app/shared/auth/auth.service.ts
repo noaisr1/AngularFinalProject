@@ -6,6 +6,7 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from "@angular/router";
 import { BehaviorSubject, Observable } from 'rxjs';
+import { AngularFireStorage, AngularFireStorageReference } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +15,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AuthService {
   private _userData: Observable<firebase.User>; // Save logged in user data
   public currentUser: UserData | null;
-  private currentUser$ = new BehaviorSubject<UserData>(null);
+  private currentUser$ = new BehaviorSubject<UserData>(null); // The '$' applies to the fact we have stream of values we can subscribe to.
 
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
+    public afStorage: AngularFireStorage
 
   ) {
     // Getting data of logged in user:
@@ -29,11 +31,13 @@ export class AuthService {
         this.afs.collection<UserData>('users', ref => ref.where('email','==',user.email)).valueChanges()
           .subscribe(users => {
             this.currentUser = users[0];
-            this.currentUser$.next(users[0]);
+            this.currentUser$.next(users[0]); // next is pushing the data to subscribers. 
           });
       }
     })
   }
+  
+  
   CurrentUser(): Observable<UserData> {
     return this.currentUser$.asObservable();
   }
@@ -52,13 +56,13 @@ export class AuthService {
             console.log(user);
             this.currentUser = user;
             this.currentUser$.next(this.currentUser);
-            if (!firebase.auth().currentUser.emailVerified) {
-              window.alert("Please Verify Your Email Account");
-              this.router.navigate(['sign-in']);
-            }
-            else {
+            // if (!firebase.auth().currentUser.emailVerified) {
+            //   window.alert("Please Verify Your Email Account");
+            //   this.router.navigate(['sign-in']);
+            // }
+            // else {
               this.router.navigate(['dashboard']);
-            }
+           // }
           });
       }).catch((error) => {
         console.log(error.message);
