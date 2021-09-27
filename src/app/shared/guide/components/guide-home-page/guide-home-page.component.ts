@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorageReference } from '@angular/fire/storage';
-import { AuthService, UserData } from 'src/app/shared/auth/auth.service';
+import { AuthService, UserData } from 'src/app/shared/common/auth/auth.service';
 import { GuideService } from '../../service/guide.service';
 
 @Component({

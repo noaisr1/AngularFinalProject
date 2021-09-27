@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, Subject } from 'rxjs';
-import { AuthService, UserData } from '../../auth/auth.service';
+import { AuthService, UserData } from '../../common/auth/auth.service';
 import { Guide } from '../../guide/service/guide.service';
 
 @Injectable({

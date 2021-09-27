@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Guide } from "../guide/service/guide.service";
-import { Tourist } from '../tourist/service/tourist.service';
+import { Guide } from "../../guide/service/guide.service";
+import { Tourist } from '../../tourist/service/tourist.service';
 import firebase from 'firebase/app';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
@@ -174,7 +174,7 @@ export class AuthService {
               phoneNumber: userData.phoneNumber,
               tourist: (userData.tourist == undefined) ? false : userData.tourist,
               guide: (userData.guide == undefined) ? false : userData.guide,
-              hasCar: userData.hasCar
+              hasCar: userData.hasCar,
             }).then(value => {
               this.afs.collection<UserData>('users')
                 .doc<UserData>(uid)
@@ -191,7 +191,8 @@ export class AuthService {
                     age: guide.age,
                     tourismTypes: guide.tourismTypes,
                     languages: guide.languages,
-                    hasPoliceCertification: guide.hasPoliceCertification
+                    hasPoliceCertification: guide.hasPoliceCertification,
+                    stars: 0
                   }
 
                   guideRef.set(data, {
@@ -199,6 +200,7 @@ export class AuthService {
                   });
                   guideRef.delete;
                   this.SendVerificationMail();
+
                 });
             });
         }

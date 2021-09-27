@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
-import { AuthService, UserData } from '../../auth/auth.service';
+import { AuthService, UserData } from '../../common/auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -42,4 +42,5 @@ export class Guide {
   tourismTypes: string[];
   languages: string[];
   hasPoliceCertification: boolean;
+  stars: number | 0;
 }
