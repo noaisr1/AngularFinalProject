@@ -11,6 +11,7 @@ import { GuideService } from '../../service/guide.service';
 export class GuideHomePageComponent implements OnInit {
   public photoURL: string;
   public user: UserData;
+  public isLoading = true;
   constructor(public guideService: GuideService,
     public authService: AuthService) { }
 
@@ -22,8 +23,13 @@ export class GuideHomePageComponent implements OnInit {
       ref.getDownloadURL().subscribe(res => {
         console.log(res);
         this.photoURL = res;
+        this.isLoading = false;
       })
     })
+  }
+
+  reportEndOfTour(){
+
   }
 
 }
