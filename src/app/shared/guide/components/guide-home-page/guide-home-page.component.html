@@ -1,7 +1,22 @@
-<div class="home-page-wrapper">  
+<!-- Loading indicator -->
+<div *ngIf="isLoading">
+              <mat-progress-bar mode="indeterminate">
+              </mat-progress-bar>
+</div>
+
+
+<div *ngIf="!isLoading" class="home-page-wrapper">  
     <!-- Masthead Avatar Image-->
     <span class="welcome-msg">Welcome, {{user.firstName}} {{user.lastName}}</span>
     <div class="img-wrapper" *ngIf="photoURL">
         <img id="userImage" [src]="photoURL" alt="..." />
+        <div class="edit-profile-btn">
+            <button class="btn btn-secondary" routerLink="/edit-profile-guide">Edit profile</button>
+        </div>
     </div>
+    <div class="report-tour-btn">
+        <button class="btn btn-primary" (click)="reportEndOfTour()">Report end of tour</button>
+    </div>
+    
+
 </div>

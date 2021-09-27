@@ -10,7 +10,9 @@ import { TouristService } from '../../service/tourist.service';
 export class TouristHomePageComponent implements OnInit {
 
   public guidesArray: Guide[] = [];
-  constructor(private touristService: TouristService) { }
+  constructor(private touristService: TouristService) { 
+    
+  }
 
   ngOnInit(): void {
     this.touristService.guides.subscribe( (guides: Guide) => {

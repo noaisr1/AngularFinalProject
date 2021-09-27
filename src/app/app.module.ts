@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -22,6 +22,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { CommonModule } from '@angular/common';
 import { TouristHomePageComponent } from './shared/tourist/components/tourist-home-page/tourist-home-page.component';
 import { GuideHomePageComponent } from './shared/guide/components/guide-home-page/guide-home-page.component';
+import { EditProfileGuideComponent } from './shared/guide/components/edit-profile-guide/edit-profile-guide.component';
+import {MatInputModule} from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +38,8 @@ import { GuideHomePageComponent } from './shared/guide/components/guide-home-pag
     FooterComponent,
     HeaderComponent,
     TouristHomePageComponent,
-    GuideHomePageComponent
+    GuideHomePageComponent,
+    EditProfileGuideComponent
   ],
   imports: [
     BrowserModule,
@@ -45,10 +51,13 @@ import { GuideHomePageComponent } from './shared/guide/components/guide-home-pag
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
-    CommonModule
-
-  
+    CommonModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatInputModule,
+    BrowserAnimationsModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [AuthService, TouristService, GuideService],
   bootstrap: [AppComponent]
 })

@@ -10,6 +10,7 @@ import { DashboardComponent } from './shared/dashboard/dashboard.component';
 import { ForgotPasswordComponent } from './shared/forgot-password/forgot-password.component';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { VerifyEmailComponent } from './shared/verify-email/verify-email.component';
+import { EditProfileGuideComponent } from './shared/guide/components/edit-profile-guide/edit-profile-guide.component';
 
 
 const routes: Routes = [
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'register-user', component: SignUpComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuard] },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'verify-email-address', component: VerifyEmailComponent }
+  { path: 'verify-email-address', component: VerifyEmailComponent },
+  { path: 'edit-profile-guide', component: EditProfileGuideComponent }
 ];
 
 @NgModule({
