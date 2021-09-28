@@ -6,12 +6,28 @@
 
 
 <div *ngIf="!isLoading" class="home-page-wrapper">
-    <!-- Masthead Avatar Image-->
-    <span class="welcome-msg">Welcome, {{user.firstName}} {{user.lastName}}</span>
-    <div class="img-wrapper" *ngIf="photoURL">
-        <img id="userImage" [src]="photoURL" alt="..." />
-        <div class="edit-profile-btn">
-            <button class="btn btn-secondary" routerLink="/edit-profile-tourist">Edit profile</button>
+    <div class="top-wrapper">
+        <span class="welcome-msg">Welcome, {{user.firstName}} {{user.lastName}}</span>
+    </div>
+    <hr/>
+    <span>Top rated guides:</span>
+    <div class="body-wrapper">
+        
+        <div class="cards-wrapper">
+            <div class="card" *ngFor="let guide of guidesArray; let i = index">
+                <img class="card-img" [src]="guidesPhotos[i]" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{guide.uid}}</h5>
+                    <p class="card-text">Rating</p>
+                    <a href="#" id="guide-btn" class="btn btn-primary">Profile</a>
+                </div>
+            </div>
+        </div>
+        <div class="img-wrapper" *ngIf="photoURL">
+            <img id="userImage" [src]="photoURL" alt="..." />
+            <div class="edit-profile-btn">
+                <button class="btn btn-secondary" routerLink="/edit-profile-tourist">Edit profile</button>
+            </div>
         </div>
     </div>
     <div class="find-match-btn">

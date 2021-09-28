@@ -121,6 +121,7 @@ export class AuthService {
         if (res) {
           this.afs.collection('users').doc(uid)
             .set({
+              uid: uid,
               email: userData.email,
               firstName: userData.firstName,
               lastName: userData.lastName,
@@ -168,6 +169,7 @@ export class AuthService {
         if (res) {
           this.afs.collection('users').doc(uid)
             .set({
+              uid: uid,
               email: userData.email,
               firstName: userData.firstName,
               lastName: userData.lastName,

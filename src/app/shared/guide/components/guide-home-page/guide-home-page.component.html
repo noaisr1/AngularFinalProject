@@ -10,7 +10,17 @@
     <span class="welcome-msg">Welcome, {{user.firstName}} {{user.lastName}}</span>
     <div class="img-wrapper" *ngIf="photoURL">
         <img id="userImage" [src]="photoURL" alt="..." />
+
+        <ng-template #t let-fill="fill">
+            <span class="star" [class.full]="fill===100">
+                <span class="half" [style.width.%]="fill">&starf;</span>&starf;
+            </span>
+        </ng-template>
+
+        <ngb-rating [max]="5" [(rate)]="rate" [readOnly]="true" [starTemplate]="t"></ngb-rating>
+        <p>Rating: {{rate}}</p>
         <div class="edit-profile-btn">
+
             <button class="btn btn-secondary" routerLink="/edit-profile-guide">Edit profile</button>
         </div>
     </div>

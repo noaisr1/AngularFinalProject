@@ -1,35 +1,71 @@
 .home-page-wrapper {
     display: flex;
+    flex-direction: column;
+
+}
+.top-wrapper {
+    display: flex;
     justify-content: space-between;
 }
-
-#userImage {
-    border-radius:100px;
-    height: 200px;
-    width: 200px;
-}
-
-.img-wrapper {
-    order: 3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-self: flex-end;
-    padding-top: 10px;
-}
-
-.edit-profile-btn {
-    padding-top: 5px;
-}
-
 .welcome-msg { 
-    order: 1;
     font-size: 20px;
     font-style: bold;
     padding-top: 10px;
 }
 
+.body-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+.cards-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    height: 450px;
+    width: 630px;
+    overflow: auto;
+    align-self: flex-end;
+    margin-top: 30px;
+}
+.img-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: flex-start;
+    padding-top: 10px;
+}
+#userImage {
+    border-radius:100px;
+    height: 200px;
+    width: 200px;
+}
+.edit-profile-btn {
+    padding-top: 5px;
+}
+
+
+
+.card {
+    max-width: 200px;
+    max-height: 250px;
+    display: flex;
+    flex-direction: column;
+}
+.card-img {
+    height: 40%;
+    width: 60%;
+    align-self: center;
+}
+.card-body {
+    width: 100%;
+    font-size: 14px;
+}
+#guide-btn {
+    width: 50%;
+    align-self: center;
+    font-size: 14px;
+}
+
+
 .find-match-btn {
-    order: 2;
     align-self: center;
 }

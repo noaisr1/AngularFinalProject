@@ -14,11 +14,13 @@ export class TouristHomePageComponent implements OnInit {
   public user: UserData;
   public isLoading = true;
   public guidesArray: Guide[] = [];
+  public guidesPhotos: string[] = [];
   constructor(private touristService: TouristService, public authService: AuthService) { 
     
   }
 
   ngOnInit(): void {
+    this.touristService.getListOfGuides();
     this.touristService.userData.subscribe(user => {
       this.user = user;
       let photoUid = this.authService.generateUid(user.firstName, user.lastName);
@@ -29,9 +31,18 @@ export class TouristHomePageComponent implements OnInit {
         this.isLoading = false;
       })
     })
-    this.touristService.guides.subscribe( (guides: Guide) => {
-      this.guidesArray.push(guides);
+    this.touristService.guides.subscribe( (guides: Guide[]) => {
+      this.guidesArray = guides;
+      for(let i=0; i<this.guidesArray.length; i++){
+        let ref: AngularFireStorageReference = this.authService.afStorage.ref('/images/' + this.guidesArray[i].uid );
+      ref.getDownloadURL().subscribe(res => {
+        console.log(res);
+        this.guidesPhotos.push(res);
+      })
+      }
+      
     })
+    
   }
 
   findAMatch() {

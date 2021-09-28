@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireStorageReference } from '@angular/fire/storage';
 import { AuthService, UserData } from 'src/app/shared/common/auth/auth.service';
 import { Guide, GuideService } from '../../service/guide.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-guide-home-page',

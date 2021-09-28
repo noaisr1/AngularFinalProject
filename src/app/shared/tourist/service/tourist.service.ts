@@ -18,7 +18,7 @@ export class TouristService {
 
   constructor(public authService: AuthService, public afs: AngularFirestore) { 
     authService.CurrentUser().subscribe(res => {
-    this.afs.collection<Tourist>('guides', ref => ref.where('email','==',res.email)).valueChanges()
+    this.afs.collection<Tourist>('tourists', ref => ref.where('email','==',res.email)).valueChanges()
       .subscribe(tourists => {
         this._touristData = tourists[0];  
         console.log(this._touristData);
