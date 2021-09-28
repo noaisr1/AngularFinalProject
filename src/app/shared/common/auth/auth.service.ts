@@ -213,7 +213,7 @@ export class AuthService {
   }
 
   generateUid(firstName: string, lastName: string): string {
-    return firstName.charAt(0) + '.' + lastName;
+    return firstName.charAt(0) + firstName.charAt(1) + '.' + lastName;
   }
 }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AuthService, UserData } from '../../common/auth/auth.service';
 
 @Injectable({
@@ -9,21 +9,21 @@ import { AuthService, UserData } from '../../common/auth/auth.service';
 })
 export class GuideService {
   private _userData$: Observable<UserData>;
+  private _guideData$ = new Subject<Guide>();
   private _userData: UserData;
   private _guideData: Guide;
 
 
   constructor(public authService: AuthService, public afs: AngularFirestore) { 
     authService.CurrentUser().subscribe(res => {
-    this.afs.collection<Guide>('guides', ref => ref.where('email','==',res.email)).valueChanges()
-      .subscribe(guides => {
-        this._guideData = guides[0];  
-        console.log(this._guideData);
-      });
       this.afs.collection<UserData>('users', ref => ref.where('email','==',res.email)).valueChanges()
       .subscribe(users => {
         this._userData = users[0];
         console.log(this._userData);
+      });
+      this.afs.collection<Guide>('guides', ref => ref.where('email','==',res.email)).valueChanges()
+      .subscribe(guides => {
+        this._guideData$.next(guides[0]);
       });
   })
 }
@@ -32,6 +32,12 @@ export class GuideService {
     return this.authService.CurrentUser();
   }
 
+  get guideData(): Observable<Guide> {
+    return this._guideData$.asObservable();
+  }
+  getGuideData() {
+    this._guideData$.next(this._guideData);
+  }
 
 }
 

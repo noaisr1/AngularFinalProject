@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorageReference } from '@angular/fire/storage';
 import { AuthService, UserData } from 'src/app/shared/common/auth/auth.service';
-import { GuideService } from '../../service/guide.service';
+import { Guide, GuideService } from '../../service/guide.service';
 
 @Component({
   selector: 'app-guide-home-page',
@@ -11,11 +11,18 @@ import { GuideService } from '../../service/guide.service';
 export class GuideHomePageComponent implements OnInit {
   public photoURL: string;
   public user: UserData;
+  public guide: Guide;
+  public rate: number;
   public isLoading = true;
   constructor(public guideService: GuideService,
     public authService: AuthService) { }
 
   ngOnInit(): void {
+    this.guideService.guideData.subscribe( (guide: Guide) => {
+      console.log(guide);
+      this.guide = guide;
+      this.rate = guide.stars;
+    })
     this.guideService.userData.subscribe(user => {
       this.user = user;
       let photoUid = this.authService.generateUid(user.firstName, user.lastName);
