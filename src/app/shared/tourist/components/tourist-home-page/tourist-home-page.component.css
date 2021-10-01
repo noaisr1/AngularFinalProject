@@ -20,11 +20,16 @@
 .cards-wrapper {
     display: flex;
     flex-wrap: wrap;
-    height: 450px;
+    height: 410px;
     width: 630px;
     overflow: auto;
     align-self: flex-end;
     margin-top: 30px;
+    border: 1px solid rgb(5, 38, 184);
+    border-radius: 10px;
+}
+.loading-cards-wrapper {
+   margin: auto;
 }
 .img-wrapper {
     display: flex;

@@ -28,6 +28,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EditProfileTouristComponent } from './shared/tourist/components/edit-profile-tourist/edit-profile-tourist.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +41,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HeaderComponent,
     TouristHomePageComponent,
     GuideHomePageComponent,
-    EditProfileGuideComponent
+    EditProfileGuideComponent,
+    EditProfileTouristComponent
   ],
   imports: [
     BrowserModule,

@@ -13,7 +13,7 @@
     <span>Top rated guides:</span>
     <div class="body-wrapper">
         
-        <div class="cards-wrapper">
+        <div *ngIf="!isLoadingCards; else loadingCards" class="cards-wrapper">
             <div class="card" *ngFor="let guide of guidesArray; let i = index">
                 <img class="card-img" [src]="guidesPhotos[i]" alt="Card image cap">
                 <div class="card-body">
@@ -23,6 +23,12 @@
                 </div>
             </div>
         </div>
+        <ng-template #loadingCards>
+            <div class="loading-cards-wrapper">
+                <mat-progress-spinner mode="indeterminate">
+                </mat-progress-spinner>   
+            </div>       
+        </ng-template>
         <div class="img-wrapper" *ngIf="photoURL">
             <img id="userImage" [src]="photoURL" alt="..." />
             <div class="edit-profile-btn">
