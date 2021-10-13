@@ -5,7 +5,7 @@ import firebase from 'firebase/app';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from "@angular/router";
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AngularFireStorage, AngularFireStorageReference } from '@angular/fire/storage';
 
 @Injectable({
@@ -15,7 +15,7 @@ import { AngularFireStorage, AngularFireStorageReference } from '@angular/fire/s
 export class AuthService {
   private _userData: Observable<firebase.User>; // Save logged in user data
   public currentUser: UserData | null;
-  private currentUser$ = new BehaviorSubject<UserData>(null); // The '$' applies to the fact we have stream of values we can subscribe to.
+  private currentUser$ = new Subject<UserData>(); // The '$' applies to the fact we have stream of values we can subscribe to.
 
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
@@ -49,19 +49,18 @@ export class AuthService {
       .then(res => {
         console.log(res);
         this._userData = this.afAuth.authState;
-        this.afs.collection<UserData>('users')
-          .doc<UserData>(res.user.uid)
+        this.afs.collection<UserData>('users', ref => ref.where('email', '==', res.user.email))
           .valueChanges()
-          .subscribe((user) => {
-            console.log(user);
-            this.currentUser = user;
+          .subscribe((users) => {
+            console.log(users);
+            this.currentUser = users[0];
             this.currentUser$.next(this.currentUser);
             // if (!firebase.auth().currentUser.emailVerified) {
             //   window.alert("Please Verify Your Email Account");
             //   this.router.navigate(['sign-in']);
             // }
             // else {
-              this.router.navigate(['dashboard']);
+              this.router.navigate(['dashboard-tourist']);
            // }
           });
       }).catch((error) => {
@@ -230,4 +229,8 @@ export class UserData {
   tourist?: boolean;
   guide?: boolean;
   hasCar: boolean;
+}
+
+function where(arg0: string, arg1: string, email: string): import("@angular/fire/firestore").QueryFn<firebase.firestore.DocumentData> {
+  throw new Error('Function not implemented.');
 }

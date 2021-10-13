@@ -29,6 +29,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditProfileTouristComponent } from './shared/tourist/components/edit-profile-tourist/edit-profile-tourist.component';
+import { DashboardTouristComponent } from './shared/tourist/dashboard-tourist/dashboard-tourist.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +43,8 @@ import { EditProfileTouristComponent } from './shared/tourist/components/edit-pr
     TouristHomePageComponent,
     GuideHomePageComponent,
     EditProfileGuideComponent,
-    EditProfileTouristComponent
+    EditProfileTouristComponent,
+    DashboardTouristComponent
   ],
   imports: [
     BrowserModule,

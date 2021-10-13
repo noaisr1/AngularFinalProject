@@ -11,6 +11,8 @@ export class TouristService {
   private _userData$: Observable<UserData>;
   private _userData: UserData;
   private _touristData: Tourist;
+  private touristSubject = new Subject();
+  private userSubject: Subject<UserData> = new Subject();
   private guides$ = new Subject();
   
 
@@ -20,19 +22,21 @@ export class TouristService {
     authService.CurrentUser().subscribe(res => {
     this.afs.collection<Tourist>('tourists', ref => ref.where('email','==',res.email)).valueChanges()
       .subscribe(tourists => {
-        this._touristData = tourists[0];  
+        this._touristData = tourists[0];
+        this.touristSubject.next(tourists[0])  
         console.log(this._touristData);
       });
       this.afs.collection<UserData>('users', ref => ref.where('email','==',res.email)).valueChanges()
       .subscribe(users => {
         this._userData = users[0];
+        this.userSubject.next(users[0]);
         console.log(this._userData);
       });
   })
 }
 
   get userData(): Observable<UserData> {
-    return this.authService.CurrentUser();
+    return this.userSubject.asObservable();
   }
 
   get guides() {
