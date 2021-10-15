@@ -14,23 +14,23 @@ import { TouristService } from '../service/tourist.service';
 export class DashboardTouristComponent implements OnInit {
   public isLoading = false;
   public user: UserData;
+  public uid: any;
   public photoURL: string;
   public guidesArray: Guide[] = [];
   public guidesPhotos: string[] = [];
   constructor(
     public authService: AuthService,
     private touristService: TouristService,
-    public router: Router,
+    private router: Router,
     public ngZone: NgZone
   ) {
-    console.log(this.user);
     let observables: Observable<any>[] = [];
     this.touristService.getListOfGuides();
     this.touristService.userData.subscribe((user)=>{
       this.user=user;
       console.log(user);
-      let photoUid = this.authService.generateUid(user.firstName, user.lastName);
-      let ref: AngularFireStorageReference = this.authService.afStorage.ref('/images/' + photoUid);
+      this.uid = this.authService.generateUid(user.firstName, user.lastName);
+      let ref: AngularFireStorageReference = this.authService.afStorage.ref('/images/' + this.uid);
       ref.getDownloadURL().subscribe(res => {
         console.log(res);
         this.photoURL = res;
@@ -53,7 +53,9 @@ export class DashboardTouristComponent implements OnInit {
    }
 
   ngOnInit() {
-
   }
 
+  gotoEditProfile() {
+    this.router.navigate(['/edit-profile-tourist', this.uid]);
+  }
 }

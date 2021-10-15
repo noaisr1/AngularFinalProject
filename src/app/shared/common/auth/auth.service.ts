@@ -15,7 +15,7 @@ import { AngularFireStorage, AngularFireStorageReference } from '@angular/fire/s
 export class AuthService {
   private _userData: Observable<firebase.User>; // Save logged in user data
   public currentUser: UserData | null;
-  private currentUser$ = new Subject<UserData>(); // The '$' applies to the fact we have stream of values we can subscribe to.
+  public currentUser$ = new Subject<UserData>(); // The '$' applies to the fact we have stream of values we can subscribe to.
 
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
@@ -225,7 +225,7 @@ export class UserData {
   lastName: string;
   photoURL: string;
   emailVerified: string;
-  phoneNumber: number;
+  phoneNumber: string;
   tourist?: boolean;
   guide?: boolean;
   hasCar: boolean;

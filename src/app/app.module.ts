@@ -30,6 +30,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditProfileTouristComponent } from './shared/tourist/components/edit-profile-tourist/edit-profile-tourist.component';
 import { DashboardTouristComponent } from './shared/tourist/dashboard-tourist/dashboard-tourist.component';
+import { MatDialogModule } from '@angular/material/dialog';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +63,8 @@ import { DashboardTouristComponent } from './shared/tourist/dashboard-tourist/da
     MatProgressBarModule,
     MatInputModule,
     BrowserAnimationsModule,
-    NgbModule
+    NgbModule,
+    MatDialogModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [AuthService, TouristService, GuideService],

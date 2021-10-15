@@ -19,7 +19,7 @@
         <div class="img-wrapper" *ngIf="photoURL">
             <img id="userImage" [src]="photoURL" alt="..." />
             <div class="edit-profile-btn">
-                <button class="btn btn-secondary" routerLink="/edit-profile-tourist">Edit profile</button>
+                <button class="btn btn-secondary" (click)="gotoEditProfile()">Edit profile</button>
             </div>
         </div>
     </div>
