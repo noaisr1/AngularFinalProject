@@ -1,61 +1,54 @@
 <!-- Sidebar navigation -->
 <div class="container-fluid">
-    <div class="row">
-  
-      <nav class="col-2 bg-dark">
-        <div class="sidebar-sticky">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link active">
-                <i class="fas fa-user"></i>Home Page
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active">
-                <i class="fas fa-user"></i>User Profile
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" (click)="gotoEditProfile()">
-                <i class="fas fa-user"></i>Edit Profile
-              </a>
-            </li>
-            <!-- Calling SignOut() Api from AuthService -->
-            <li class="nav-item">
-              <a class="nav-link" (click)="authService.SignOut()">
-                <i class="fas fa-sign-out-alt"></i>Log out
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-  
-      <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center"
-                style="width: 100%; height: 100%;">
-                <mat-progress-spinner mode="indeterminate">
-                </mat-progress-spinner>
+  <div class="row">
+
+    <nav class="col-2 bg-dark">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active">
+              <i class="fas fa-user"></i>Home Page
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active">
+              <i class="fas fa-user"></i>User Profile
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" (click)="gotoEditProfile()">
+              <i class="fas fa-user"></i>Edit Profile
+            </a>
+          </li>
+          <!-- Calling SignOut() Api from AuthService -->
+          <li class="nav-item">
+            <a class="nav-link" (click)="authService.SignOut()">
+              <i class="fas fa-sign-out-alt"></i>Log out
+            </a>
+          </li>
+        </ul>
       </div>
-  
-      <!-- Main content -->
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <div *ngIf="!isLoading" class="inner-adjust">
-  
-          <!-- Show user data when logged in -->
-          <div class="row" *ngIf="authService.currentUser as user">
-            <div class="col-md-12">
-                <app-tourist-home-page 
-                [user]="user" 
-                [uid]="uid"
-                [photoURL]="photoURL"
-                [guidesArray]="guidesArray"
-                [guidesPhotos]="guidesPhotos"
-                (gotoEditProfileEvent)="gotoEditProfile()"
-                ></app-tourist-home-page>
-            </div>
+    </nav>
+
+    <!-- Main content -->
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div class="inner-adjust">
+        <!-- Show user data when logged in -->
+        <div class="row">
+          <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center"
+            style="width: 100%; height: 100%;">
+            <mat-progress-spinner mode="indeterminate">
+            </mat-progress-spinner>
           </div>
-  
+          <div class="col-md-12">
+            <app-tourist-home-page *ngIf="(!isLoading && !isLoadingGuides)" [user]="user" [uid]="uid"
+              [photoURL]="photoURL" [guidesArray]="guidesArray" [guidesPhotos]="guidesPhotos"
+              (gotoEditProfileEvent)="gotoEditProfile()"></app-tourist-home-page>
+          </div>
         </div>
-      </main>
-  
-    </div>
+
+      </div>
+    </main>
+
   </div>
+</div>

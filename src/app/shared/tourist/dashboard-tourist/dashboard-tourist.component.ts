@@ -12,7 +12,8 @@ import { TouristService } from '../service/tourist.service';
   styleUrls: ['./dashboard-tourist.component.css']
 })
 export class DashboardTouristComponent implements OnInit {
-  public isLoading = false;
+  public isLoading = true;
+  public isLoadingGuides = true;
   public user: UserData;
   public uid: any;
   public photoURL: string;
@@ -48,7 +49,7 @@ export class DashboardTouristComponent implements OnInit {
       forkJoin(observables).subscribe(dataArray=> {
         this.guidesPhotos = dataArray;
       })
-      
+      this.isLoadingGuides = false;
     })
    }
 

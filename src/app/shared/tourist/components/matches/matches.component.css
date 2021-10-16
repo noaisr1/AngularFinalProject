@@ -13,3 +13,7 @@
     overflow: hidden;
     color: #FFC107;
 }
+
+.row {
+    height: calc(100vh - 84px);
+}

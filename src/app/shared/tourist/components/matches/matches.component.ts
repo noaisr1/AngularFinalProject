@@ -20,7 +20,7 @@ export class MatchesComponent implements OnInit {
   headers = ["Name","Class","Course","Grade"];
   public user: UserData;
   public tourist: Tourist;
-  public isLoading = false;
+  public isLoading = true;
   public guidesArray: Guide[] = [];
   uid: any;
   rowsData: {Name: string, Rating: number, Languages: string[]}[] = [];
@@ -52,6 +52,7 @@ export class MatchesComponent implements OnInit {
       this.subs.push(this.touristService.getRowData().subscribe( (rows) => {
         console.log(rows);
         this.rowsData = rows;
+        this.isLoading = false;
       }))
     });
   }

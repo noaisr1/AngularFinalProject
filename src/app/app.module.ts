@@ -33,6 +33,7 @@ import { DashboardTouristComponent } from './shared/tourist/dashboard-tourist/da
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatchesComponent } from './shared/tourist/components/matches/matches.component';
 import { AgGridModule } from 'ag-grid-angular';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { AgGridModule } from 'ag-grid-angular';
     BrowserAnimationsModule,
     NgbModule,
     MatDialogModule,
-    AgGridModule
+    AgGridModule,
+    MatButtonModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [AuthService, TouristService, GuideService],
