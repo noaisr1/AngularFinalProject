@@ -25,6 +25,8 @@
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
     "@ng-select/ng-select": "^7.2.0",
     "@popperjs/core": "^2.9.2",
+    "ag-grid-angular": "^26.1.0",
+    "ag-grid-community": "^26.1.0",
     "angular2-navigate-with-data": "^1.1.11",
     "angularfire2": "^5.4.2",
     "firebase": "^7.24.0",

@@ -13,6 +13,7 @@ import { VerifyEmailComponent } from './shared/common/verify-email/verify-email.
 import { EditProfileGuideComponent } from './shared/guide/components/edit-profile-guide/edit-profile-guide.component';
 import { DashboardTouristComponent } from './shared/tourist/dashboard-tourist/dashboard-tourist.component';
 import { EditProfileTouristComponent } from './shared/tourist/components/edit-profile-tourist/edit-profile-tourist.component';
+import { MatchesComponent } from './shared/tourist/components/matches/matches.component';
 
 
 const routes: Routes = [
@@ -23,7 +24,8 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'verify-email-address', component: VerifyEmailComponent },
   { path: 'edit-profile-guide', component: EditProfileGuideComponent },
-  { path: 'edit-profile-tourist/:uid', component: EditProfileTouristComponent }
+  { path: 'edit-profile-tourist/:uid', component: EditProfileTouristComponent },
+  { path: 'matches/:uid', component: MatchesComponent }
 ];
 
 @NgModule({

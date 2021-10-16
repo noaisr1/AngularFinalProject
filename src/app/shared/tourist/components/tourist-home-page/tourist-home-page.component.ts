@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireStorageReference } from '@angular/fire/storage';
-import { Observable, forkJoin} from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, forkJoin, Subject} from 'rxjs';
 import { AuthService, UserData } from 'src/app/shared/common/auth/auth.service';
 import { Guide } from 'src/app/shared/guide/service/guide.service';
 import { TouristService } from '../../service/tourist.service';
@@ -13,10 +14,13 @@ import { TouristService } from '../../service/tourist.service';
 export class TouristHomePageComponent implements OnInit {
   @Input() photoURL: string;
   @Input() user: UserData;
+  @Input() uid: any;
   @Input() guidesArray: Guide[] = [];
   @Input() guidesPhotos: string[] = [];
   @Output() gotoEditProfileEvent: EventEmitter<any> = new EventEmitter();
-  constructor(public authService: AuthService) { 
+  constructor(public authService: AuthService, 
+              private router: Router,
+              private touristService: TouristService) { 
   }
 
   ngOnInit(): void {
@@ -24,7 +28,7 @@ export class TouristHomePageComponent implements OnInit {
   }
 
   findAMatch() {
-
+    this.router.navigate(['/matches', this.uid])
   }
 
   gotoEditProfile() {

@@ -31,6 +31,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditProfileTouristComponent } from './shared/tourist/components/edit-profile-tourist/edit-profile-tourist.component';
 import { DashboardTouristComponent } from './shared/tourist/dashboard-tourist/dashboard-tourist.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatchesComponent } from './shared/tourist/components/matches/matches.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     GuideHomePageComponent,
     EditProfileGuideComponent,
     EditProfileTouristComponent,
-    DashboardTouristComponent
+    DashboardTouristComponent,
+    MatchesComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +67,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatInputModule,
     BrowserAnimationsModule,
     NgbModule,
-    MatDialogModule
+    MatDialogModule,
+    AgGridModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [AuthService, TouristService, GuideService],

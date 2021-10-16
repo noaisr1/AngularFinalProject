@@ -1,0 +1,94 @@
+<div class="container-fluid">
+    <div class="row">
+
+        <nav class="col-2 bg-dark">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" (click)="gotoHomePage()">
+                            <i class="fas fa-user"></i>Home Page
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active">
+                            <i class="fas fa-user"></i>User Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active">
+                            <i class="fas fa-user"></i>Edit Profile
+                        </a>
+                    </li>
+                    <!-- Calling SignOut() Api from AuthService -->
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="authService.SignOut()">
+                            <i class="fas fa-sign-out-alt"></i>Log out
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center"
+            style="width: 100%; height: 100%;">
+            <mat-progress-spinner mode="indeterminate">
+            </mat-progress-spinner>
+        </div>
+
+        <!-- Main content -->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div *ngIf="!isLoading" class="inner-adjust">
+
+                <!-- Show user data when logged in -->
+                <div class="row">
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-8 mx-auto mb-3">
+                                <!-- section-title -->
+                                <div>
+                                    <h2>Here are the top guides for you</h2>
+                                    <app-search-box></app-search-box>
+                                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                                        <table class="table table-bordered mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Guide's Name</th>
+                                                    <th scope="col">Rating</th>
+                                                    <th scope="col">Languages</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let row of rowsData; index as i">
+                                                    <th scope="row">{{i+1}}</th>
+                                                    <td>
+                                                        <a class="redirect btn-link">{{row?.Name}}</a>
+                                                    </td>
+                                                    <td>
+                                                        <ng-template #t let-fill="fill">
+                                                            <span class="star" [class.full]="fill===100">
+                                                                <span class="half" [style.width.%]="fill">&starf;</span>&starf;
+                                                            </span>
+                                                        </ng-template>
+                                                
+                                                        <ngb-rating [max]="5" [rate]="row.Rating" [readOnly]="true" [starTemplate]="t"></ngb-rating>
+                                                    </td>
+                                                    <td>
+                                                        {{row.Languages}}
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- /.section-title -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

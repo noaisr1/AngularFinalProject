@@ -13,8 +13,8 @@ export class TouristService {
   private _touristData: Tourist;
   private touristSubject = new Subject();
   private userSubject: Subject<UserData> = new Subject();
-  private guides$ = new Subject();
-  
+  private guides$ = new Subject<Guide[]>();
+  private rowData$ = new Subject<any[]>();
 
 
 
@@ -24,13 +24,11 @@ export class TouristService {
       .subscribe(tourists => {
         this._touristData = tourists[0];
         this.touristSubject.next(tourists[0])  
-        console.log(this._touristData);
       });
       this.afs.collection<UserData>('users', ref => ref.where('email','==',res.email)).valueChanges()
       .subscribe(users => {
         this._userData = users[0];
         this.userSubject.next(users[0]);
-        console.log(this._userData);
       });
   })
 }
@@ -39,7 +37,7 @@ export class TouristService {
     return this.userSubject.asObservable();
   }
 
-  get guides() {
+  get guides(): Observable<Guide[]> {
     return this.guides$.asObservable();
   }
 
@@ -49,8 +47,29 @@ export class TouristService {
             this.guides$.next(guide); // next is pushing the data to subscribers. 
           });
   }
-    
 
+  getBestMatches(tourist: Tourist) {
+    let language = '';
+    let tourismType = '';
+    let rowsArray: any[] = [];
+    this.afs.collection<Guide>('guides')
+      .valueChanges()
+      .subscribe(guides => {
+        console.log(guides);
+        guides.forEach((guide) => {
+        language = guide.languages.find((language: string) => tourist.language == language);
+        tourismType = guide.tourismTypes.find((tourismType: string) => tourist.tourismType == tourismType);
+        if (language !== undefined && tourismType !== undefined) {
+          rowsArray.push({ Name: guide.uid, Rating: guide.stars, Languages: guide.languages })
+        }
+      });
+      this.rowData$.next(rowsArray);
+    });
+  }
+
+  getRowData(): Observable<any[]> {
+    return this.rowData$.asObservable();
+  }
 }
 
 export class Tourist {
