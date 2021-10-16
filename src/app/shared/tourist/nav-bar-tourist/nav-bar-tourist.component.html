@@ -1,0 +1,29 @@
+<div class="nav-bar">
+<nav>
+    <div class="sidebar-sticky">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="gotoHomePage()">
+            <i class="fas fa-user"></i>Home Page
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fas fa-user"></i>User Profile
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="gotoEditProfile()">
+            <i class="fas fa-user"></i>Edit Profile
+          </a>
+        </li>
+        <!-- Calling SignOut() Api from AuthService -->
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="authService.SignOut()">
+            <i class="fas fa-sign-out-alt"></i>Log out
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>

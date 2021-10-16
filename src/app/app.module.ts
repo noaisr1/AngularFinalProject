@@ -34,6 +34,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatchesComponent } from './shared/tourist/components/matches/matches.component';
 import { AgGridModule } from 'ag-grid-angular';
 import {MatButtonModule} from '@angular/material/button';
+import { NavBarTouristComponent } from './shared/tourist/nav-bar-tourist/nav-bar-tourist.component';
+import { GuideProfilePageComponent } from './shared/guide/components/guide-profile-page/guide-profile-page.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import {MatButtonModule} from '@angular/material/button';
     EditProfileGuideComponent,
     EditProfileTouristComponent,
     DashboardTouristComponent,
-    MatchesComponent
+    MatchesComponent,
+    NavBarTouristComponent,
+    GuideProfilePageComponent
   ],
   imports: [
     BrowserModule,

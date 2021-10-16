@@ -2,32 +2,34 @@
     <div class="top-wrapper">
         <span class="welcome-msg">Welcome, {{user.firstName}} {{user.lastName}}</span>
     </div>
-    <hr/>
+    <hr />
     <span>Top rated guides:</span>
     <div class="body-wrapper">
-        
+
         <div class="cards-wrapper">
             <div class="card" *ngFor="let guide of guidesArray; let i = index">
                 <img class="card-img" [src]="guidesPhotos[i]" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">{{guide.uid}}</h5>
-                    <ng-template #t let-fill="fill">
-                        <span class="star" [class.full]="fill===100">
-                            <span class="half" [style.width.%]="fill">&starf;</span>&starf;
-                        </span>
-                    </ng-template>
-            
-                    <ngb-rating [max]="5" [rate]="guide.stars" [readOnly]="true" [starTemplate]="t"></ngb-rating>
+                    <div class="rating">
+                        <ng-template #t let-fill="fill">
+                            <span class="star" [class.full]="fill===100">
+                                <span class="half" [style.width.%]="fill">&starf;</span>&starf;
+                            </span>
+                        </ng-template>
+
+                        <ngb-rating [max]="5" [rate]="guide.stars" [readOnly]="true" [starTemplate]="t"></ngb-rating>
+                    </div>
                     <a id="guide-profile-btn" mat-stroked-button href="#" target="_blank">Profile</a>
                 </div>
             </div>
         </div>
         <div class="img-wrapper" *ngIf="photoURL">
             <img id="userImage" [src]="photoURL" alt="..." />
-               
-                <div class="find-match-btn">
-                    <button mat-flat-button color="primary" (click)="findAMatch()">Find a match now!</button>
-                </div>
+
+            <div class="find-match-btn">
+                <button mat-flat-button color="primary" (click)="findAMatch()">Find a match now!</button>
+            </div>
         </div>
     </div>
 

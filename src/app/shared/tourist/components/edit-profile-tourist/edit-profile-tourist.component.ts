@@ -61,6 +61,9 @@ export class EditProfileTouristComponent implements OnInit {
     });
       
   }
+  gotoEditProfile() {
+    this.router.navigate(['/edit-profile-tourist', this.uid]);
+  }
 
   gotoHomePage() {
     this.authService.currentUser$.next(this.user);

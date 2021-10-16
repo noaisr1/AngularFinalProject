@@ -2,12 +2,15 @@
 .row {
     height: calc(100vh - 80px);
 }
+app-nav-bar-tourist {
+    height: 100%;
+}
 html { height: 100%; }
 body { 
     height: 100%;
     margin: 0; 
     font-family: Roboto, "Helvetica Neue", sans-serif; 
-    background-image: url('./assets/dust_scratches.png');
+    background-image: url('./assets/photo-1584531979583-18c5c4b25efc.jfif');
 }
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';

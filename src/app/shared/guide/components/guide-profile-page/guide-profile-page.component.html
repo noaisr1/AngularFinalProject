@@ -1,0 +1,53 @@
+<!-- <div class="container myContainer">
+    <div class="row">
+  
+        <div class="pt-3 pb-2 mb-3 border-bottom">
+          <div class="row">
+            <div class="col-md-12">
+              <h1>Hello, <strong>{{(guide.displayName) ? guide.displayName : 'User'}}</strong></h1>                
+              <p>Email: <strong>{{guide.email}}</strong></p>
+              <div class="image-preview" id="right">
+                <img [src]="getUserProfileImage()" style="width:400px; height:250px"/>
+              </div>
+            </div>
+          </div>
+        </div>
+            
+            
+        <div class="pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">My Posts</h1>
+        </div>
+  
+        <div class="profile-wrapper">
+          <div *ngFor="let post of posts">
+            <div class="row" *ngIf="authService.currentUser as user">
+              <div *ngIf="post?.user_id == user?.uid" class="card">
+                
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{post?.title}}
+                    </h5>
+  
+                    <div class="row">
+                        <div class="col-sm-10 col-12">
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                {{post?.time?.seconds *1000 | date: 'shortTime'}}
+                                {{post?.date}}
+                            </h6>
+                      </div>
+                      
+                      <div class="col-sm-2 col-12">
+                          <button class="btn-success deleteBtn" type="delete" (click)="deleteMessage(this.post)">delete</button>
+                      </div>
+                    </div>
+                  
+                    <p class="card-text">
+                        {{ post?.message }}
+                    </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div> -->
