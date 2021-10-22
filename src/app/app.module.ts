@@ -36,6 +36,8 @@ import { AgGridModule } from 'ag-grid-angular';
 import {MatButtonModule} from '@angular/material/button';
 import { NavBarTouristComponent } from './shared/tourist/nav-bar-tourist/nav-bar-tourist.component';
 import { GuideProfilePageComponent } from './shared/guide/components/guide-profile-page/guide-profile-page.component';
+import { GuideProfileReadonlyComponent } from './shared/tourist/components/guide-profile-readonly/guide-profile-readonly.component';
+import { ImageUploadComponent } from './shared/common/image-upload/image-upload.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { GuideProfilePageComponent } from './shared/guide/components/guide-profi
     DashboardTouristComponent,
     MatchesComponent,
     NavBarTouristComponent,
-    GuideProfilePageComponent
+    GuideProfilePageComponent,
+    GuideProfileReadonlyComponent,
+    ImageUploadComponent
   ],
   imports: [
     BrowserModule,

@@ -7,7 +7,7 @@
     <div class="body-wrapper">
 
         <div class="cards-wrapper">
-            <div class="card" *ngFor="let guide of guidesArray; let i = index">
+            <div class="card" *ngFor="let guide of guides; let i = index">
                 <img class="card-img" [src]="guidesPhotos[i]" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">{{guide.uid}}</h5>
@@ -20,12 +20,12 @@
 
                         <ngb-rating [max]="5" [rate]="guide.stars" [readOnly]="true" [starTemplate]="t"></ngb-rating>
                     </div>
-                    <a id="guide-profile-btn" mat-stroked-button href="#" target="_blank">Profile</a>
+                    <a id="guide-profile-btn" mat-stroked-button (click)="gotoGuideProfile(guide.uid)" target="_blank">Profile</a>
                 </div>
             </div>
         </div>
         <div class="img-wrapper" *ngIf="photoURL">
-            <img id="userImage" [src]="photoURL" alt="..." />
+            <img id="userImage" [src]="user.photoUrl" alt="..." />
 
             <div class="find-match-btn">
                 <button mat-flat-button color="primary" (click)="findAMatch()">Find a match now!</button>

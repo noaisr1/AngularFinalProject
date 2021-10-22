@@ -17,7 +17,7 @@
           </div>
           <div class="col-md-12">
             <app-tourist-home-page *ngIf="(!isLoading && !isLoadingGuides)" [user]="user" [uid]="uid"
-              [photoURL]="photoURL" [guidesArray]="guidesArray" [guidesPhotos]="guidesPhotos"
+              [photoURL]="photoUrl" [guidesUserArray]="guidesUserArray" [guides]="guides" [guidesPhotos]="guidesPhotos"
               (gotoEditProfileEvent)="gotoEditProfile()"></app-tourist-home-page>
           </div>
         </div>

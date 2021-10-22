@@ -1,4 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorageReference } from '@angular/fire/storage';
 import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
@@ -16,44 +17,46 @@ export class DashboardTouristComponent implements OnInit {
   public isLoadingGuides = true;
   public user: UserData;
   public uid: any;
-  public photoURL: string;
-  public guidesArray: Guide[] = [];
+  public photoUrl: string;
+  public guidesUserArray: UserData[] = [];
+  public guides: Guide[] = [];
   public guidesPhotos: string[] = [];
   constructor(
     public authService: AuthService,
     private touristService: TouristService,
+    private afs: AngularFirestore,
     private router: Router,
     public ngZone: NgZone
   ) {
+   }
+
+  ngOnInit() {
     let observables: Observable<any>[] = [];
     this.touristService.getListOfGuides();
     this.touristService.userData.subscribe((user)=>{
       this.user=user;
       console.log(user);
       this.uid = this.authService.generateUid(user.firstName, user.lastName);
-      let ref: AngularFireStorageReference = this.authService.afStorage.ref('/images/' + this.uid);
-      ref.getDownloadURL().subscribe(res => {
-        console.log(res);
-        this.photoURL = res;
-        this.isLoading = false;
-      })
+      // let ref: AngularFireStorageReference = this.authService.afStorage.ref('/images/' + this.uid);
+      // ref.getDownloadURL().subscribe(res => {
+      //   console.log(res);
+      //   this.photoURL = res;
+      //   
+      // })
+      this.photoUrl = user.photoUrl;
+      this.isLoading = false;
     })
-    this.touristService.guides.subscribe( (guides: Guide[]) => {
-      this.guidesArray = guides;
-      for(let i=0; i<this.guidesArray.length; i++){
-        let ref: AngularFireStorageReference = this.authService.afStorage.ref('/images/' + this.guidesArray[i].uid );
-       
-          observables.push(ref.getDownloadURL());
-        
+    this.touristService.guides.subscribe((guides) => {
+      this.guides = guides;
+    })
+    this.afs.collection<UserData>('users', ref => ref.where('guide','==',true)).valueChanges()
+    .subscribe(guides => {
+      this.guidesUserArray = guides;
+      for(let i=this.guidesUserArray.length-1 ; i >= 0; i--){
+        this.guidesPhotos.push(this.guidesUserArray[i].photoUrl);
       }
-      forkJoin(observables).subscribe(dataArray=> {
-        this.guidesPhotos = dataArray;
-      })
       this.isLoadingGuides = false;
     })
-   }
-
-  ngOnInit() {
   }
 
   gotoEditProfile() {

@@ -124,6 +124,7 @@ export class AuthService {
               email: userData.email,
               firstName: userData.firstName,
               lastName: userData.lastName,
+              photoUrl: userData.photoUrl,
               phoneNumber: userData.phoneNumber,
               tourist: (userData.tourist == undefined) ? false : userData.tourist,
               guide: (userData.guide == undefined) ? false : userData.guide,
@@ -173,6 +174,7 @@ export class AuthService {
               firstName: userData.firstName,
               lastName: userData.lastName,
               phoneNumber: userData.phoneNumber,
+              photoUrl: userData.photoUrl,
               tourist: (userData.tourist == undefined) ? false : userData.tourist,
               guide: (userData.guide == undefined) ? false : userData.guide,
               hasCar: userData.hasCar,
@@ -223,7 +225,7 @@ export class UserData {
   email: string;
   firstName: string;
   lastName: string;
-  photoURL: string;
+  photoUrl: string;
   emailVerified: string;
   phoneNumber: string;
   tourist?: boolean;

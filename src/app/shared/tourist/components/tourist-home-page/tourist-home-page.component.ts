@@ -15,7 +15,8 @@ export class TouristHomePageComponent implements OnInit {
   @Input() photoURL: string;
   @Input() user: UserData;
   @Input() uid: any;
-  @Input() guidesArray: Guide[] = [];
+  @Input() guidesUserArray: UserData[] = [];
+  @Input() guides: Guide[] = [];
   @Input() guidesPhotos: string[] = [];
   @Output() gotoEditProfileEvent: EventEmitter<any> = new EventEmitter();
   constructor(public authService: AuthService, 
@@ -33,6 +34,10 @@ export class TouristHomePageComponent implements OnInit {
 
   gotoEditProfile() {
     this.gotoEditProfileEvent.emit();
+  }
+
+  gotoGuideProfile(guideUid: string) {
+    this.router.navigate(['/guide-profile-readonly', guideUid]);
   }
 
 }

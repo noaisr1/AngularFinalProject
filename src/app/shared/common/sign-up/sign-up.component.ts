@@ -90,29 +90,34 @@ export class SignUpComponent implements OnInit {
 
   }
 
-  onUpload(event: any) {
-    // Creating id to photo which is same as uid
-    const photoId = this.authService.generateUid(this.form.get('firstName').value, this.form.get('lastName').value);
+  // onUpload(event: any) {
+  //   // Creating id to photo which is same as uid
+  //   const photoId = this.authService.generateUid(this.form.get('firstName').value, this.form.get('lastName').value);
   
-    // Creating reference to storage bucket location
-    this.ref = this.afStorage.ref('/images/' + photoId);
+  //   // Creating reference to storage bucket location
+  //   this.ref = this.afStorage.ref('/images/' + photoId);
 
-    // put method creates an AngularFireUploadTask and start the upload
-    this.task = this.ref.put(event.target.files[0]);
+  //   // put method creates an AngularFireUploadTask and start the upload
+  //   this.task = this.ref.put(event.target.files[0]);
 
-    // AngularFireUploadTask provides observable to get uploadProgress value
-    this.uploadProgress = this.task.snapshotChanges()
-    .pipe(map(s => (s.bytesTransferred / s.totalBytes) * 100));
+  //   // AngularFireUploadTask provides observable to get uploadProgress value
+  //   this.uploadProgress = this.task.snapshotChanges()
+  //   .pipe(map(s => (s.bytesTransferred / s.totalBytes) * 100));
 
-    // Observe upload progress
-    this.uploadProgress = this.task.percentageChanges();
-    // Get notify when the download URL is available
-    this.task.snapshotChanges().pipe(
-      finalize(() => this.photoURL = this.ref.getDownloadURL())
-    )
-    .subscribe();
+  //   // Observe upload progress
+  //   this.uploadProgress = this.task.percentageChanges();
+  //   // Get notify when the download URL is available
+  //   this.task.snapshotChanges().pipe(
+  //     finalize(() => this.photoURL = this.ref.getDownloadURL())
+  //   )
+  //   .subscribe();
 
 
+  // }
+
+  setPhotoUrl(event: any) {
+    console.log(event);
+    this.photoURL = event;
   }
 
   selectAllT() {
@@ -196,7 +201,7 @@ export class SignUpComponent implements OnInit {
     this.user.firstName = user.firstName;
     this.user.lastName = user.lastName;
     this.user.phoneNumber = user.phoneNumber;
-    this.user.photoURL = '/images/'+this.authService.generateUid(this.user.firstName, this.user.lastName);
+    this.user.photoUrl = this.photoURL;
     (this.userType.value == "Tourist") ? this.user.tourist = true : this.user.guide = true;
     (this.hasCar.value == "Yes") ? this.user.hasCar = true: this.user.hasCar = false;
 

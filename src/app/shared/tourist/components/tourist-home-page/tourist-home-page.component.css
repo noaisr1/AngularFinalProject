@@ -23,7 +23,7 @@ h5 {
 .cards-wrapper {
     display: flex;
     flex-wrap: wrap;
-    width: 62%;
+    width: 50%;
     height: calc(100vh - 185px);
     overflow: auto;
     align-self: flex-end;
