@@ -49,4 +49,5 @@ export class Guide {
   languages: string[];
   hasPoliceCertification: boolean;
   stars: number | 0;
+  reviews: string[]; // Array of reviews's uids.
 }

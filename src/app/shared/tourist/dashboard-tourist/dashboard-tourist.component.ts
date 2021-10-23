@@ -30,7 +30,7 @@ export class DashboardTouristComponent implements OnInit {
   ) {
    }
 
-  ngOnInit() {
+  async ngOnInit(): Promise<void> {
     let observables: Observable<any>[] = [];
     this.touristService.getListOfGuides();
     this.touristService.userData.subscribe((user)=>{
@@ -52,7 +52,7 @@ export class DashboardTouristComponent implements OnInit {
     this.afs.collection<UserData>('users', ref => ref.where('guide','==',true)).valueChanges()
     .subscribe(guides => {
       this.guidesUserArray = guides;
-      for(let i=this.guidesUserArray.length-1 ; i >= 0; i--){
+      for(let i=0 ; i < this.guidesUserArray.length ; i++){
         this.guidesPhotos.push(this.guidesUserArray[i].photoUrl);
       }
       this.isLoadingGuides = false;

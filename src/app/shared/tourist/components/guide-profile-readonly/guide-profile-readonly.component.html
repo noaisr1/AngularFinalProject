@@ -1,53 +1,87 @@
-<!-- <div class="container myContainer">
-    <div class="row">
-  
-        <div class="pt-3 pb-2 mb-3 border-bottom">
-          <div class="row">
-            <div class="col-md-12">
-              <h1>Hello, <strong>{{(guide.displayName) ? guide.displayName : 'User'}}</strong></h1>                
-              <p>Email: <strong>{{guide.email}}</strong></p>
-              <div class="image-preview" id="right">
-                <img [src]="getUserProfileImage()" style="width:400px; height:250px"/>
+<div class="container-fluid">
+  <div class="row">
+
+    <app-nav-bar-tourist (gotoEditEvent)="gotoEditProfile()" (gotoHomePageEvent)="gotoHomePage()"></app-nav-bar-tourist>
+
+    <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center" style="width: 100%; height: 100%;">
+      <mat-progress-spinner mode="indeterminate">
+      </mat-progress-spinner>
+    </div>
+
+    <!-- Main content -->
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10">
+      <div *ngIf="!isLoading" class="inner-adjust">
+
+        <!-- Show user data when logged in -->
+        <div class="row">
+          <div class="container myContainer">
+            <div class="main-wrapper">
+
+
+              <div class="profile-wrapper">
+                <h1><strong>{{firstName}} {{lastName}}</strong></h1>
+                <p>Email: <strong>{{guide.email}}</strong></p>
+                <p>Phone Number: <strong>{{phoneNumber}}</strong></p>
+                <div class="image-preview" id="right">
+                  <img [src]="photoUrl" style="width:400px; height:250px" />
+                </div>
+
               </div>
-            </div>
-          </div>
-        </div>
-            
-            
-        <div class="pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">My Posts</h1>
-        </div>
+
+
+
+              <div class="reviews-wrapper">
+                <h1 class="h2">Reviews ({{reviews.length}})</h1>
+                <hr />
+
+                <form #form="ngForm">
+                  <div class="reviewForm-wrapper">
+                    <input class="review-input" name="message" ngModel placeholder="Write something!" type="text">
+                    <div class="rating-form">
+                      <p style="margin-bottom: 2px;">Rate: {{rate}}</p>
+                      <ng-template #t let-fill="fill">
+                        <span class="star" [class.full]="fill===100">
+                          <span class="half" [style.width.%]="fill">&starf;</span>&starf;
+                        </span>
+                      </ng-template>
   
-        <div class="profile-wrapper">
-          <div *ngFor="let post of posts">
-            <div class="row" *ngIf="authService.currentUser as user">
-              <div *ngIf="post?.user_id == user?.uid" class="card">
-                
-                <div class="card-body">
-                    <h5 class="card-title">
-                        {{post?.title}}
-                    </h5>
-  
-                    <div class="row">
-                        <div class="col-sm-10 col-12">
-                            <h6 class="card-subtitle mb-2 text-muted">
-                                {{post?.time?.seconds *1000 | date: 'shortTime'}}
-                                {{post?.date}}
-                            </h6>
-                      </div>
-                      
-                      <div class="col-sm-2 col-12">
-                          <button class="btn-success deleteBtn" type="delete" (click)="deleteMessage(this.post)">delete</button>
-                      </div>
+                      <ngb-rating [max]="5" [(rate)]="rate"  [starTemplate]="t"></ngb-rating>
                     </div>
+                    <a mat-stroked-button type="submit" (click)="addReview(form)" target="_blank">Add</a>
+                  </div>
                   
-                    <p class="card-text">
-                        {{ post?.message }}
-                    </p>
+                </form>
+
+
+                <div class="cards-wrapper">
+                  <div class="card" *ngFor="let review of reviews">
+                    <div class="card-body">
+                      <h4 class="card-title">
+                        {{review.title}}
+                      </h4>
+                      <h5 id="class-subtitle" class="card-subtitle text-muted">
+                        {{review.date.toMillis() | date:'dd/MM/yy h:mm a'}}
+                        <div class="card-rating">
+                          <ng-template #t let-fill="fill">
+                            <span class="star" [class.full]="fill===100">
+                              <span class="half" [style.width.%]="fill">&starf;</span>&starf;
+                            </span>
+                          </ng-template>
+
+                          <ngb-rating [max]="5" [rate]="review.stars" [readOnly]="true" [starTemplate]="t"></ngb-rating>
+                        </div>
+                      </h5>
+
+                      <p class="card-text">
+                        {{ review?.message }}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-    </div>
-</div> -->
+      </div>
+    </main>
+  </div>

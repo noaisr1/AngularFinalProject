@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'edit-profile-guide', component: EditProfileGuideComponent },
   { path: 'edit-profile-tourist/:uid', component: EditProfileTouristComponent },
   { path: 'matches/:uid', component: MatchesComponent },
-  { path: 'guide-profile-readonly/:uid', component: GuideProfileReadonlyComponent}
+  { path: 'guide-profile-readonly/:touristUid/:guideUid', component: GuideProfileReadonlyComponent}
 ];
 
 @NgModule({

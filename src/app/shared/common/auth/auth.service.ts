@@ -140,6 +140,7 @@ export class AuthService {
                   }
                   const touristRef: AngularFirestoreDocument<any> = this.afs.doc(`tourists/${uid}`);
                   const data: Tourist = {
+                    uid: uid,
                     email: tourist.email,
                     tourismType: tourist.tourismType,
                     groupType: tourist.groupType,
@@ -190,12 +191,14 @@ export class AuthService {
                   const guideRef: AngularFirestoreDocument<any> = this.afs.doc(`guides/${uid}`);
 
                   const data: Guide = {
+                    uid: uid,
                     email: guide.email,
                     age: guide.age,
                     tourismTypes: guide.tourismTypes,
                     languages: guide.languages,
                     hasPoliceCertification: guide.hasPoliceCertification,
-                    stars: 0
+                    stars: 0,
+                    reviews: [],
                   }
 
                   guideRef.set(data, {

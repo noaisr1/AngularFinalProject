@@ -1,0 +1,73 @@
+.main-wrapper {
+    display: flex;
+    align-items: baseline;
+}
+
+.profile-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.reviews-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+    width: 100%;
+}
+
+.reviewForm-wrapper {
+    display: flex;
+    width: 100%;
+    
+
+}
+
+.review-input {
+    width: 100%;
+    margin-right: 10px;
+}
+
+.rating-form {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+
+.card-rating {
+    align-self: flex-end;
+}
+.cards-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    overflow: auto;
+}
+#class-subtitle  {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card {
+    flex-wrap: wrap;
+}
+
+h4 {
+    margin-top: 5px;
+    line-height: 0px;
+}
+
+.star {
+    position: relative;
+    display: inline-block;
+    font-size: 18px;
+    color: #d3d3d3;
+}
+.full {
+    color: #FFC107;
+}
+.half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color: #FFC107;
+}
