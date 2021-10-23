@@ -63,8 +63,12 @@ export class MatchesComponent implements OnInit {
   }
   
   gotoHomePage() {
-    this.authService.currentUser$.next(this.user);
-    this.router.navigate(['dashboard-tourist']);
+    this.router.navigate(['dashboard-tourist', this.uid]);
+  }
+
+  gotoGuideProfile(guideUid: string) {
+    console.log(guideUid);
+    this.router.navigate(['/guide-profile-readonly', this.uid, guideUid]);
   }
 
 }

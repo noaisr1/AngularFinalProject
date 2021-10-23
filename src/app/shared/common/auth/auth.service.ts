@@ -60,7 +60,7 @@ export class AuthService {
             //   this.router.navigate(['sign-in']);
             // }
             // else {
-              this.router.navigate(['dashboard-tourist']);
+              this.router.navigate(['dashboard-tourist', this.currentUser.uid]);
            // }
           });
       }).catch((error) => {

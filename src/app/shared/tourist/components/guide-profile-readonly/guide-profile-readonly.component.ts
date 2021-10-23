@@ -26,12 +26,15 @@ export class GuideProfileReadonlyComponent implements OnInit {
   phoneNumber: any;
   photoUrl: string;
   rate: number = 0;
+  guideRate: number;
   reviews: Review[] = [];
   constructor(private route: ActivatedRoute, 
               private afs: AngularFirestore, 
               private router: Router,
               private authService: AuthService,
-              private reviewsService: ReviewsService) { }
+              private reviewsService: ReviewsService) {
+                
+               }
 
   async ngOnInit(): Promise<void> {
     this.route.params.subscribe((params: Params) => {
@@ -52,7 +55,7 @@ export class GuideProfileReadonlyComponent implements OnInit {
         this.guide = guide;
         this.selectedLanguages = guide.languages;
         this.selectedTypes = guide.tourismTypes;
-        this.rate = guide.stars;
+        this.guideRate = this.calculateGuideRate() | 0;
         this.afs.collection<UserData>('users').doc(this.guideUid).valueChanges()
           .subscribe(user => {
             this.user = user;
@@ -70,8 +73,7 @@ export class GuideProfileReadonlyComponent implements OnInit {
   }
   
   gotoHomePage() {
-    this.authService.currentUser$.next(this.user);
-    this.router.navigate(['dashboard-tourist']);
+    this.router.navigate(['dashboard-tourist', this.touristUid]);
   }
 
   addReview(form: NgForm): void {
@@ -82,7 +84,29 @@ export class GuideProfileReadonlyComponent implements OnInit {
       form.resetForm();
     } else{
       confirm(this.touristUid+", You can not post a blank message")
-    }  
+    }
+    this.calculateGuideRate();
+  } 
+
+  calculateGuideRate() {
+    var sum = 0;
+    for( var i = 0; i < this.reviews.length; i++ ){
+        sum += this.reviews[i].stars;
+    }
+    var avg = sum/this.reviews.length;
+    var strNum = (Math.round(avg * 100) / 100).toFixed(2);
+    var rate = +strNum;
+    this.updateGuideRate(rate);
+    return rate;
+    
+  }
+  
+  updateGuideRate(rate: number) {
+    const guideRef = this.afs.collection('guides');
+    
+    guideRef.doc(this.guideUid).update({
+      stars: rate
+    })
   }
 
 }

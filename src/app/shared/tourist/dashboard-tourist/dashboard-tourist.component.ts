@@ -1,7 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorageReference } from '@angular/fire/storage';
-import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError, ActivatedRoute, Params } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
 import { AuthService, UserData } from '../../common/auth/auth.service';
 import { Guide } from '../../guide/service/guide.service';
@@ -26,11 +26,16 @@ export class DashboardTouristComponent implements OnInit {
     private touristService: TouristService,
     private afs: AngularFirestore,
     private router: Router,
-    public ngZone: NgZone
+    public ngZone: NgZone,
+    private route: ActivatedRoute
   ) {
    }
 
   async ngOnInit(): Promise<void> {
+    this.route.params.subscribe((params: Params) => {
+      this.uid = params['uid'];
+      
+    })
     let observables: Observable<any>[] = [];
     this.touristService.getListOfGuides();
     this.touristService.userData.subscribe((user)=>{

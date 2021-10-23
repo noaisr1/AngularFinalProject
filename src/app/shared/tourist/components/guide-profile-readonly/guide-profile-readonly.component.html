@@ -25,6 +25,16 @@
                 <div class="image-preview" id="right">
                   <img [src]="photoUrl" style="width:400px; height:250px" />
                 </div>
+                <div class="rating-guide">
+                  <h4 style="margin-bottom: 5px;">Rate: {{guideRate}} </h4>
+                  <ng-template #t let-fill="fill">
+                    <span class="star" [class.full]="fill===100">
+                      <span class="half" [style.width.%]="fill">&starf;</span>&starf;
+                    </span>
+                  </ng-template>
+
+                  <ngb-rating [max]="5" [rate]="guideRate" [readonly]="true"  [starTemplate]="t"></ngb-rating>
+                </div>
 
               </div>
 
@@ -32,8 +42,6 @@
 
               <div class="reviews-wrapper">
                 <h1 class="h2">Reviews ({{reviews.length}})</h1>
-                <hr />
-
                 <form #form="ngForm">
                   <div class="reviewForm-wrapper">
                     <input class="review-input" name="message" ngModel placeholder="Write something!" type="text">
@@ -47,7 +55,7 @@
   
                       <ngb-rating [max]="5" [(rate)]="rate"  [starTemplate]="t"></ngb-rating>
                     </div>
-                    <a mat-stroked-button type="submit" (click)="addReview(form)" target="_blank">Add</a>
+                    <a id="addBtn" mat-stroked-button type="submit" (click)="addReview(form)" target="_blank">Add</a>
                   </div>
                   
                 </form>

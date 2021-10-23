@@ -38,7 +38,7 @@
                                                 <tr *ngFor="let row of rowsData; index as i">
                                                     <th scope="row">{{i+1}}</th>
                                                     <td>
-                                                        <a class="redirect btn-link">{{row?.Name}}</a>
+                                                        <a class="redirect btn-link" (click)="gotoGuideProfile(row.Name)">{{row?.Name}}</a>
                                                     </td>
                                                     <td>
                                                         <ng-template #t let-fill="fill">
