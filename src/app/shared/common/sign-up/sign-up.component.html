@@ -5,223 +5,232 @@
         <div class="displayTableCell">
           <div class="authBlock">
             <h3>Sign Up</h3>
+
             <form [formGroup]="form" (ngSubmit)="signUp()" class="sign-up-form">
 
               <!-- All users fields -->
-
-              <div class="form-group">
-                <input type="email" class="form-control" formControlName="email" placeholder="Email Address">
-                <div class="mt-2 text-danger"></div>
-              </div>
-
-              <div class="form-group">
-                <input type="password" class="form-control" formControlName="password" placeholder="Password">
-                <div class="mt-4 text-danger"></div>
-              </div>
-
-              <div class="form-group">
-                <input type="text" class="form-control" formControlName="firstName" placeholder="First Name">
-                <div class="mt-2 text-danger"></div>
-              </div>
-
-              <div class="form-group">
-                <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name">
-                <div class="mt-2 text-danger"></div>
-              </div>
-
-              <!-- <div class="form-group">
-                <span>Upload photo:</span>
-                <input [attr.disabled]=" (form.get('firstName').valid && form.get('lastName').valid)? null: true" type="file" class="form-control" formControlName="userPhoto" (change)="onUpload($event)" accept=".png,.jpg">
-                <progress max="100" [value]="(uploadProgress| async)"></progress>
-                <div class="result" *ngIf="photoURL | async; let uploadSrc">
-                  <a [href]="uploadSrc">You just uploaded this file!</a>
-                </div>
-                
-                <div class="container" *ngIf="photoURL | async; let url">
-                    <img [src]="url" alt="Image from AngularFireStorage">
-                </div>
-              </div> -->
-              <app-image-upload (photoUrl)="setPhotoUrl($event)"></app-image-upload>
-
-              <div class="form-group">
-                <input type="number" class="form-control" formControlName="phoneNumber" placeholder="Phone Number">
-                <div class="mt-2 text-danger"></div>
-              </div>
-
-              <div class="form-group">
-                <input id="tourist" type="radio" value="Tourist" formControlName="userType">
-                <label class="custom-control-label" for="tourist">Tourist</label>
-
-                <input id="guide" type="radio" value="Guide" formControlName="userType">
-                <label class="custom-control-label" for="female">Guide</label>
-              </div>
-
-              <div class="form-group">
-                <p>Do you have a car?</p>
-                <input id="no" type="radio" value="Yes" formControlName="hasCar">
-                <label class="custom-control-label" for="yes">Yes</label>
-
-                <input id="no" type="radio" value="No" formControlName="hasCar">
-                <label class="custom-control-label" for="no">No</label>
-              </div>
-
-              <!-- Only Guides fields -->
-
-              <div class="col">
-                <div class="costum-guide-part" *ngIf="guideFlag">
-                  <div class="form-group">
-                    <h6>Your age:</h6>
-                    <select [(ngModel)]="selectedAge" class="dropdown-toggle form-control" formControlName="age"
-                      id="ageDropdown" data-toggle="dropdown" value="age">
-                      <option *ngFor="let age of ages" [value]="ages[age]">
-                        {{age}}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group">
-                    <h6>Please select your specialties: </h6>
-                    <ng-select [multiple]="true" [items]="tourismTypes" class="form-control" [closeOnSelect]="false"
-                      [(ngModel)]="selectedTypes" formControlName="selectedTourismTypes" bindLabel="name">
-                      <ng-template ng-header-tmp let-items="items">
-                        <input type="checkbox"
-                          [checked]="this.form.get('selectedTourismTypes').value?.length === tourismTypes.length "
-                          (change)="toggleCheckAllT($event)" />
-                        {{this.form.get('selectedTourismTypes').value?.length === tourismTypes.length? 'Deselect':
-                        'Select'}} All
-                      </ng-template>
-
-                      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-                        <div class="ng-value" *ngFor="let item of items | slice:0:2">
-                          <span class="ng-value-label"> {{item}}</span>
-                          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">x</span>
-                        </div>
-                        <div class="ng-value" *ngIf="items.length > 2">
-                          <span class="ng-value-label">{{items.length-2}} more ... </span>
-                        </div>
-                      </ng-template>
-
-                      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                        <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />
-                        {{item}}
-                      </ng-template>
-                    </ng-select>
-                  </div>
-
-                  <div class="form-group">
-                    <h6>What languages do you speak? </h6>
-                    <ng-select [multiple]="true" [items]="languages" class="form-control" [closeOnSelect]="false"
-                      [(ngModel)]="selectedLanguages" formControlName="selectedLanguagesForm" bindLabel="name">
-                      <ng-template ng-header-tmp let-items="items">
-                        <input type="checkbox"
-                          [checked]="this.form.get('selectedLanguagesForm').value?.length === languages.length "
-                          (change)="toggleCheckAllL($event)" />
-                        {{this.form.get('selectedLanguagesForm').value?.length === languages.length? 'Deselect':
-                        'Select'}} All
-                      </ng-template>
-
-                      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-                        <div class="ng-value" *ngFor="let item of items | slice:0:2">
-                          <span class="ng-value-label"> {{item}}</span>
-                          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">x</span>
-                        </div>
-                        <div class="ng-value" *ngIf="items.length > 2">
-                          <span class="ng-value-label">{{items.length-2}} more ... </span>
-                        </div>
-                      </ng-template>
-
-                      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                        <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />
-                        {{item}}
-                      </ng-template>
-                    </ng-select>
-                  </div>
-
-                  <div class="form-group">
-                    <p>Do you have police certification?</p>
-                    <input id="no" type="radio" value="Yes" formControlName="hasPoliceCertification">
-                    <label class="custom-control-label" for="yes">Yes</label>
-
-                    <input id="no" type="radio" value="No" formControlName="hasPoliceCertification">
-                    <label class="custom-control-label" for="no">No</label>
-                  </div>
-                </div>
-
-                <!-- Only tourists part -->
-
-                <div class="costum-tourist-part" *ngIf="touristFlag">
-                  <div class="form-group">
-                    <h6>What language do you speak? </h6>
-                    <ng-select [multiple]="false" [items]="languages" class="form-control" [closeOnSelect]="true"
-                      [(ngModel)]="selectedLanguage" formControlName="selectedLanguageForm" bindLabel="name">
-                      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-                        <div class="ng-value" *ngFor="let item of items | slice:0:2">
-                          <span class="ng-value-label"> {{item}}</span>
-                          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">x</span>
-                        </div>
-                        <div class="ng-value" *ngIf="items.length > 2">
-                          <span class="ng-value-label">{{items.length-2}} more ... </span>
-                        </div>
-                      </ng-template>
-
-                      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                        <input id="item-{{index}}" type="radio" [checked]="item$.selected" />
-                        {{item}}
-                      </ng-template>
-                    </ng-select>
-                  </div>
-
-
-                  <div class="form-group">
-                    <h6>Group type: </h6>
-                    <ng-select [multiple]="false" [items]="groupTypes" class="form-control" [closeOnSelect]="true"
-                      [(ngModel)]="selectedGroupType" formControlName="selectedGroupType" bindLabel="name">
-                      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-                        <div class="ng-value" *ngFor="let item of items | slice:0:2">
-                          <span class="ng-value-label"> {{item}}</span>
-                          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">x</span>
-                        </div>
-                        <div class="ng-value" *ngIf="items.length > 2">
-                          <span class="ng-value-label">{{items.length-2}} more ... </span>
-                        </div>
-                      </ng-template>
-
-                      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                        <input id="item-{{index}}" type="radio" [checked]="item$.selected" />
-                        {{item}}
-                      </ng-template>
-                    </ng-select>
-                  </div>
-
-                  <div class="form-group">
-                    <h6>Tourism type: </h6>
-                    <ng-select [multiple]="false" [items]="tourismTypes" class="form-control" [closeOnSelect]="true"
-                      [(ngModel)]="selectedType" formControlName="selectedTourismType" bindLabel="name">
-                      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-                        <div class="ng-value" *ngFor="let item of items | slice:0:2">
-                          <span class="ng-value-label"> {{item}}</span>
-                          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">x</span>
-                        </div>
-                        <div class="ng-value" *ngIf="items.length > 2">
-                          <span class="ng-value-label">{{items.length-2}} more ... </span>
-                        </div>
-                      </ng-template>
-
-                      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                        <input id="item-{{index}}" type="radio" [checked]="item$.selected" />
-                        {{item}}
-                      </ng-template>
-                    </ng-select>
-                  </div>
-
+              <div class="form-wrapper">
+                <div class="form-group">
+                  <input type="email" class="form-control" formControlName="email" placeholder="Email Address">
+                  <div class="mt-2 text-danger"></div>
                 </div>
 
                 <div class="form-group">
-                  <button mat-button [disabled]="form.invalid" class="btn btn-primary submit-button" type="submit">Sign Up
-                  </button>
+                  <input type="password" class="form-control" formControlName="password" placeholder="Password">
+                  <div class="mt-4 text-danger"></div>
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" formControlName="firstName" placeholder="First Name">
+                  <div class="mt-2 text-danger"></div>
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name">
+                  <div class="mt-2 text-danger"></div>
+                </div>
+                <div class="image-upload-wrapper">
+                  <app-image-upload (photoUrl)="setPhotoUrl($event)"></app-image-upload>
+                </div>
+                <div class="form-group">
+                  <input type="number" class="form-control" formControlName="phoneNumber" placeholder="Phone Number">
+                  <div class="mt-2 text-danger"></div>
+                </div>
+
+                <div class="form-group">
+                  <p>Are you a tourist or a guide?</p>
+                  <div class="radio-wrapper">
+                    <div class="radio-input">
+                      <input id="tourist" type="radio" value="Tourist" formControlName="userType">
+                      <label for="tourist">Tourist</label>
+                    </div>
+                    <div class="radio-input">
+                      <input id="guide" type="radio" value="Guide" formControlName="userType">
+                      <label for="guide">Guide</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <p>Do you have a car?</p>
+                  <div class="radio-wrapper">
+                    <div class="radio-input">
+                      <input id="no" type="radio" value="Yes" formControlName="hasCar">
+                      <label for="yes">Yes</label>
+                    </div>
+                    <div class="radio-input">
+                      <input id="no" type="radio" value="No" formControlName="hasCar">
+                      <label for="no">No</label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Only Guides fields -->
+
+                <div class="col">
+                  <div class="costum-guide-part" *ngIf="guideFlag">
+                    <div class="form-group">
+                      <p>Your age:</p>
+                      <select [(ngModel)]="selectedAge" class="dropdown-toggle form-control" formControlName="age"
+                        id="ageDropdown" data-toggle="dropdown" value="age">
+                        <option *ngFor="let age of ages" [value]="ages[age]">
+                          {{age}}
+                        </option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <p>Please select your specialties: </p>
+                      <ng-select [multiple]="true" [items]="tourismTypes" class="form-control" [closeOnSelect]="false"
+                        [(ngModel)]="selectedTypes" formControlName="selectedTourismTypes" bindLabel="name">
+                        <ng-template ng-header-tmp let-items="items">
+                          <input type="checkbox"
+                            [checked]="this.form.get('selectedTourismTypes').value?.length === tourismTypes.length "
+                            (change)="toggleCheckAllT($event)" />
+                          {{this.form.get('selectedTourismTypes').value?.length === tourismTypes.length? 'Deselect':
+                          'Select'}} All
+                        </ng-template>
+
+                        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                          <div class="ng-value" *ngFor="let item of items | slice:0:2">
+                            <span class="ng-value-label"> {{item}}</span>
+                            <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">x</span>
+                          </div>
+                          <div class="ng-value" *ngIf="items.length > 2">
+                            <span class="ng-value-label">{{items.length-2}} more ... </span>
+                          </div>
+                        </ng-template>
+
+                        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                          <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />
+                          {{item}}
+                        </ng-template>
+                      </ng-select>
+                    </div>
+
+                    <div class="form-group">
+                      <p>What languages do you speak? </p>
+                      <ng-select [multiple]="true" [items]="languages" class="form-control" [closeOnSelect]="false"
+                        [(ngModel)]="selectedLanguages" formControlName="selectedLanguagesForm" bindLabel="name">
+                        <ng-template ng-header-tmp let-items="items">
+                          <input type="checkbox"
+                            [checked]="this.form.get('selectedLanguagesForm').value?.length === languages.length "
+                            (change)="toggleCheckAllL($event)" />
+                          {{this.form.get('selectedLanguagesForm').value?.length === languages.length? 'Deselect':
+                          'Select'}} All
+                        </ng-template>
+
+                        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                          <div class="ng-value" *ngFor="let item of items | slice:0:2">
+                            <span class="ng-value-label"> {{item}}</span>
+                            <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">x</span>
+                          </div>
+                          <div class="ng-value" *ngIf="items.length > 2">
+                            <span class="ng-value-label">{{items.length-2}} more ... </span>
+                          </div>
+                        </ng-template>
+
+                        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                          <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />
+                          {{item}}
+                        </ng-template>
+                      </ng-select>
+                    </div>
+
+                    <div class="form-group">
+                      <p>Do you have police certification?</p>
+                      <div class="radio-wrapper">
+                        <div class="radio-input">
+                          <input id="no" type="radio" value="Yes" formControlName="hasPoliceCertification">
+                          <label for="yes">Yes</label>
+                        </div>
+                        <div class="radio-input">
+                          <input id="no" type="radio" value="No" formControlName="hasPoliceCertification">
+                          <label for="no">No</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Only tourists part -->
+
+                  <div class="costum-tourist-part" *ngIf="touristFlag">
+                    <div class="form-group">
+                      <p>What language do you speak? </p>
+                      <ng-select [multiple]="false" [items]="languages" class="form-control" [closeOnSelect]="true"
+                        [(ngModel)]="selectedLanguage" formControlName="selectedLanguageForm" bindLabel="name">
+                        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                          <div class="ng-value" *ngFor="let item of items | slice:0:2">
+                            <span class="ng-value-label"> {{item}}</span>
+                            <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">x</span>
+                          </div>
+                          <div class="ng-value" *ngIf="items.length > 2">
+                            <span class="ng-value-label">{{items.length-2}} more ... </span>
+                          </div>
+                        </ng-template>
+
+                        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                          <input id="item-{{index}}" type="radio" [checked]="item$.selected" />
+                          {{item}}
+                        </ng-template>
+                      </ng-select>
+                    </div>
+
+
+                    <div class="form-group">
+                      <p>Group type: </p>
+                      <ng-select [multiple]="false" [items]="groupTypes" class="form-control" [closeOnSelect]="true"
+                        [(ngModel)]="selectedGroupType" formControlName="selectedGroupType" bindLabel="name">
+                        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                          <div class="ng-value" *ngFor="let item of items | slice:0:2">
+                            <span class="ng-value-label"> {{item}}</span>
+                            <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">x</span>
+                          </div>
+                          <div class="ng-value" *ngIf="items.length > 2">
+                            <span class="ng-value-label">{{items.length-2}} more ... </span>
+                          </div>
+                        </ng-template>
+
+                        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                          <input id="item-{{index}}" type="radio" [checked]="item$.selected" />
+                          {{item}}
+                        </ng-template>
+                      </ng-select>
+                    </div>
+
+                    <div class="form-group">
+                      <p>Tourism type: </p>
+                      <ng-select [multiple]="false" [items]="tourismTypes" class="form-control" [closeOnSelect]="true"
+                        [(ngModel)]="selectedType" formControlName="selectedTourismType" bindLabel="name">
+                        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                          <div class="ng-value" *ngFor="let item of items | slice:0:2">
+                            <span class="ng-value-label"> {{item}}</span>
+                            <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">x</span>
+                          </div>
+                          <div class="ng-value" *ngIf="items.length > 2">
+                            <span class="ng-value-label">{{items.length-2}} more ... </span>
+                          </div>
+                        </ng-template>
+
+                        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                          <input id="item-{{index}}" type="radio" [checked]="item$.selected" />
+                          {{item}}
+                        </ng-template>
+                      </ng-select>
+                    </div>
+
+                  </div>
+
+                  <div class="form-group">
+                    <button mat-button [disabled]="form.invalid" class="btn btn-primary submit-button"
+                      type="submit">Sign
+                      Up
+                    </button>
+                  </div>
                 </div>
               </div>
             </form>
+
             <div class="redirectToLogin">
               <span>Already have an account? <span class="redirect btn-link" routerLink="/sign-in">Sign In</span></span>
             </div>

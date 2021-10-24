@@ -116,7 +116,6 @@ export class SignUpComponent implements OnInit {
   // }
 
   setPhotoUrl(event: any) {
-    console.log(event);
     this.photoURL = event;
   }
 

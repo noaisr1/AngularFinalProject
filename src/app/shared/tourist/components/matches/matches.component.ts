@@ -50,8 +50,8 @@ export class MatchesComponent implements OnInit {
         this.user = user;
       });
       this.subs.push(this.touristService.getRowData().subscribe( (rows) => {
-        console.log(rows);
         this.rowsData = rows;
+    
         this.isLoading = false;
       }))
     });
@@ -67,7 +67,6 @@ export class MatchesComponent implements OnInit {
   }
 
   gotoGuideProfile(guideUid: string) {
-    console.log(guideUid);
     this.router.navigate(['/guide-profile-readonly', this.uid, guideUid]);
   }
 

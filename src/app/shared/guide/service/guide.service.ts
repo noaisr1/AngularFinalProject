@@ -19,7 +19,6 @@ export class GuideService {
       this.afs.collection<UserData>('users', ref => ref.where('email','==',res.email)).valueChanges()
       .subscribe(users => {
         this._userData = users[0];
-        console.log(this._userData);
       });
       this.afs.collection<Guide>('guides', ref => ref.where('email','==',res.email)).valueChanges()
       .subscribe(guides => {

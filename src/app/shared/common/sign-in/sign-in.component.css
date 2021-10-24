@@ -1,13 +1,7 @@
 .form-control{
     margin-top: 10px;
 }
-#google-btn{
-    font-size:15px;
-    border: 1px solid black;
-    padding: 5px;
-    margin-bottom: 20px;
-    margin-top: 10px;
-}
+
 #signin-btn{
     margin-bottom: 10px;
     padding: 5px;
@@ -16,8 +10,16 @@
 }
 #forgot-pwd{
     color: lightcoral;
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 15px;
     text-align: left;
     
+}
+
+.form-wrapper { 
+    height: calc(100vh - 80px);
+}
+
+h1 {
+    margin-top: 10px;
 }

@@ -37,7 +37,6 @@ export class TouristHomePageComponent implements OnInit {
   }
 
   gotoGuideProfile(guideUid: string) {
-    console.log(guideUid);
     this.router.navigate(['/guide-profile-readonly', this.uid, guideUid]);
   }
 

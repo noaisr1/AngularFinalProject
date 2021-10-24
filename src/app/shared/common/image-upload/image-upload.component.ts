@@ -11,6 +11,7 @@ import { AuthService, UserData } from '../auth/auth.service';
 })
 export class ImageUploadComponent implements OnInit {
   @Output() photoUrl = new EventEmitter<string>();
+  isUploading = false;
   subs: Subscription[] = [];
   user: UserData;
   imgUrl: string;
@@ -30,7 +31,6 @@ export class ImageUploadComponent implements OnInit {
     this.subs.push(this.authService.CurrentUser().subscribe(user => {
       this.user = user;
       this.uid = this.authService.generateUid(user.firstName, user.lastName);
-      console.log(user);
     }));
   }
 
@@ -68,6 +68,7 @@ export class ImageUploadComponent implements OnInit {
   }
 
   upload(){
+    this.isUploading = true;
     this.fileFormat = false;
     this.fileIsNull = false;
     var newPhotoUrl = this._uploadForm.get('url').value;
@@ -83,7 +84,7 @@ export class ImageUploadComponent implements OnInit {
     if(this.fileFormat || this.fileIsNull) return;
     else{
         this.photoUrl.emit(newPhotoUrl);
-        console.log("changed successfully")
+        this.isUploading = false;
       
     }
   }

@@ -3,8 +3,8 @@
     flex-direction: column;
 
 }
-h5 {
-    margin: 2px;
+h2, h3 { 
+    margin-bottom: 3px;
 }
 .top-wrapper {
     display: flex;
@@ -27,8 +27,9 @@ h5 {
     height: calc(100vh - 185px);
     overflow: auto;
     align-self: flex-end;
-    border: 1px solid rgb(5, 38, 184);
+    border: 2px solid rgb(5, 38, 184);
     border-radius: 10px;
+    justify-content: center;
 }
 .loading-cards-wrapper {
    margin: auto;
@@ -38,7 +39,7 @@ h5 {
     flex-direction: column;
     align-items: center;
     align-self: flex-start;
-    padding-top: 10px;
+    margin-right: 15%;
 }
 #userImage {
     border-radius:100px;
@@ -46,10 +47,11 @@ h5 {
     width: 200px;
 }
 .find-match-btn {
-    padding-top: 5px;
+    padding-top: 10px;
 }
 
 .card {
+    border: 2px solid gray;
     max-width: 33%;
     max-height: 50%;
     display: flex;
@@ -71,6 +73,7 @@ h5 {
 
 
 .find-match-btn {
+    margin-top: 10px;
     align-self: center;
 }
 .star {

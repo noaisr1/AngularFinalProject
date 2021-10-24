@@ -51,11 +51,9 @@ export class EditProfileTouristComponent implements OnInit {
         this.selectedLanguage = tourist.language;
         this.selectedGroupType = tourist.groupType;
         this.selectedType = tourist.tourismType;
-        console.log(this.tourist);
       this.afs.collection<UserData>('users').doc(this.uid).valueChanges()
       .subscribe(user => {
         this.user = user
-        console.log(this.user);
         this.generateForm();
       });
     });
@@ -72,7 +70,6 @@ export class EditProfileTouristComponent implements OnInit {
   Save() {
     let tmpDetails = JSON.stringify(this.form.value);
     let newUser = JSON.parse(tmpDetails) as UserData;
-    console.log(newUser)
     this.saveUser(newUser);
     this.saveTourist();
     this.dialog.open(this.matDialog);
@@ -90,7 +87,6 @@ export class EditProfileTouristComponent implements OnInit {
   }
 
   saveTourist() {
-    console.log(this.selectedGroupType);
     const touristRef = this.afs.collection('tourists');
     touristRef.doc(this.uid).update({
       email: this.user.email, 

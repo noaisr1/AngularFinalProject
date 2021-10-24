@@ -49,7 +49,6 @@ export class ReviewsService {
         this.afs.collection<Guide>('guides', ref => ref.where('uid', '==', guideUid))
         .valueChanges()
         .subscribe((guides) => {
-          console.log(guides[0]);
           guides[0].reviews.push(res.id)
         })
       });

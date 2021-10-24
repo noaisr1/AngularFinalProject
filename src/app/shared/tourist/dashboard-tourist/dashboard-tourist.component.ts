@@ -36,18 +36,9 @@ export class DashboardTouristComponent implements OnInit {
       this.uid = params['uid'];
       
     })
-    let observables: Observable<any>[] = [];
     this.touristService.getListOfGuides();
     this.touristService.userData.subscribe((user)=>{
       this.user=user;
-      console.log(user);
-      this.uid = this.authService.generateUid(user.firstName, user.lastName);
-      // let ref: AngularFireStorageReference = this.authService.afStorage.ref('/images/' + this.uid);
-      // ref.getDownloadURL().subscribe(res => {
-      //   console.log(res);
-      //   this.photoURL = res;
-      //   
-      // })
       this.photoUrl = user.photoUrl;
       this.isLoading = false;
     })

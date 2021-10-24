@@ -44,15 +44,12 @@ export class AuthService {
 
   // Sign in with email/password
   SignIn(email: string, password: string): void {
-    console.log(email, password);
     this.afAuth.signInWithEmailAndPassword(email, password)
       .then(res => {
-        console.log(res);
         this._userData = this.afAuth.authState;
         this.afs.collection<UserData>('users', ref => ref.where('email', '==', res.user.email))
           .valueChanges()
           .subscribe((users) => {
-            console.log(users);
             this.currentUser = users[0];
             this.currentUser$.next(this.currentUser);
             // if (!firebase.auth().currentUser.emailVerified) {
@@ -64,7 +61,6 @@ export class AuthService {
            // }
           });
       }).catch((error) => {
-        console.log(error.message);
         window.alert(error);
       });
   }
@@ -98,7 +94,6 @@ export class AuthService {
   // Sign out
   SignOut() {
     this.afAuth.signOut().then(res => {
-      console.log(res);
       this.currentUser = null;
       this.currentUser$.next(this.currentUser);
       this.router.navigate(['sign-in']);
@@ -114,7 +109,6 @@ export class AuthService {
 
   SignUpTourist(userData: UserData, password: string, tourist: Tourist) {
     let uid = this.generateUid(userData.firstName, userData.lastName);
-    console.log(uid);
     this.afAuth.createUserWithEmailAndPassword(userData.email, password)
       .then(res => {
         if (res) {
@@ -134,7 +128,6 @@ export class AuthService {
                 .doc<UserData>(uid)
                 .valueChanges()
                 .subscribe(user => {
-                  console.log(user);
                   if (user) {
                     this.currentUser$.next(user);
                   }
@@ -164,7 +157,6 @@ export class AuthService {
 
   SignUpGuide(userData: UserData, password: string, guide: Guide) {
     let uid = this.generateUid(userData.firstName, userData.lastName);
-    console.log(uid);
     this.afAuth.createUserWithEmailAndPassword(userData.email, password)
       .then(res => {
         if (res) {
@@ -184,7 +176,6 @@ export class AuthService {
                 .doc<UserData>(uid)
                 .valueChanges()
                 .subscribe(user => {
-                  console.log(user);
                   if (user) {
                     this.currentUser$.next(user);
                   }

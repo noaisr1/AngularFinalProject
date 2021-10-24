@@ -23,7 +23,6 @@ export class AuthGuard implements CanActivate {
       map(user=> user!==null),
       tap(value=>{
         if(!value){
-          console.log(value);
           this.router.navigate(['sign-in']).then();
           return value;
         }else{

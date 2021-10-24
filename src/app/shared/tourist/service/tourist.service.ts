@@ -55,12 +55,11 @@ export class TouristService {
     this.afs.collection<Guide>('guides')
       .valueChanges()
       .subscribe(guides => {
-        console.log(guides);
         guides.forEach((guide) => {
         language = guide.languages.find((language: string) => tourist.language == language);
         tourismType = guide.tourismTypes.find((tourismType: string) => tourist.tourismType == tourismType);
         if (language !== undefined && tourismType !== undefined) {
-          rowsArray.push({ Name: guide.uid, Rating: guide.stars, Languages: guide.languages })
+          rowsArray.push({ Name: guide.uid, Rating: guide.stars, Languages: guide.languages.join(', ') })
         }
       });
       this.rowData$.next(rowsArray);

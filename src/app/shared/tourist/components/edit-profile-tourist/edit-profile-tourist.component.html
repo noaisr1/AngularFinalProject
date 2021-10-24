@@ -1,52 +1,50 @@
 <!-- Sidebar navigation -->
 <div class="container-fluid">
-    <div class="row">
-  
-      <app-nav-bar-tourist
-      (gotoEditEvent)="gotoEditProfile()"
-      (gotoHomePageEvent)="gotoHomePage()"
-      ></app-nav-bar-tourist>
-      
-      <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center"
-                style="width: 100%; height: 100%;">
-                <mat-progress-spinner mode="indeterminate">
-                </mat-progress-spinner>
-      </div>
-  
-      <!-- Main content -->
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <div *ngIf="!isLoading" class="inner-adjust">
-  
-          <!-- Show user data when logged in -->
-          <div class="row" *ngIf="authService.currentUser as user">
-            <div class="col-md-12">
-                <div class="container mt-5 myContainer mx-auto">
-                    <div class="row">
-                      <div class="col">
-                        <div class="fill-style-1">
-                          <div class="displayTableCell">
-                            <div class="authBlock">
-                              <h3>Edit Profile</h3>
-                              <form [formGroup]="form" (ngSubmit)="Save()" class="sign-up-form">
-                  
-                                <!-- All users fields -->
-                  
-                                <div class="form-group">
-                                  <input type="email" class="form-control" formControlName="email" value="{{user.email}}">
-                                  <div class="mt-2 text-danger"></div>
-                                </div>
-                  
-                                <div class="form-group">
-                                  <input type="text" class="form-control" formControlName="firstName" value="{{user.firstName}}">
-                                  <div class="mt-2 text-danger"></div>
-                                </div>
-                  
-                                <div class="form-group">
-                                  <input type="text" class="form-control" formControlName="lastName" value="{{user.lastName}}">
-                                  <div class="mt-2 text-danger"></div>
-                                </div>
-                  
-                                <!-- <div class="form-group">
+  <div class="row">
+
+    <app-nav-bar-tourist (gotoEditEvent)="gotoEditProfile()" (gotoHomePageEvent)="gotoHomePage()"></app-nav-bar-tourist>
+
+    <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center" style="width: 100%; height: 100%;">
+      <mat-progress-spinner mode="indeterminate">
+      </mat-progress-spinner>
+    </div>
+
+    <!-- Main content -->
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div *ngIf="!isLoading" class="inner-adjust">
+
+        <!-- Show user data when logged in -->
+        <div class="row" *ngIf="authService.currentUser as user">
+          <div class="col-md-12">
+            <div class="container mt-5 myContainer mx-auto">
+              <div class="row">
+                <div class="col">
+                  <div class="fill-style-1">
+                    <div class="displayTableCell">
+                      <div class="authBlock">
+                        <h2>Edit Profile</h2>
+                        <form [formGroup]="form" (ngSubmit)="Save()" class="sign-up-form">
+
+                          <!-- All users fields -->
+
+                          <div class="form-group">
+                            <input type="email" class="form-control" formControlName="email" value="{{user.email}}">
+                            <div class="mt-2 text-danger"></div>
+                          </div>
+
+                          <div class="form-group">
+                            <input type="text" class="form-control" formControlName="firstName"
+                              value="{{user.firstName}}">
+                            <div class="mt-2 text-danger"></div>
+                          </div>
+
+                          <div class="form-group">
+                            <input type="text" class="form-control" formControlName="lastName"
+                              value="{{user.lastName}}">
+                            <div class="mt-2 text-danger"></div>
+                          </div>
+
+                          <!-- <div class="form-group">
                                   <span>Upload photo:</span>
                                   <input [attr.disabled]=" (form.get('firstName').valid && form.get('lastName').valid)? null: true" type="file" class="form-control" formControlName="userPhoto" (change)="onUpload($event)" accept=".png,.jpg">
                                   <progress max="100" [value]="(uploadProgress| async)"></progress>
@@ -58,103 +56,106 @@
                                       <img [src]="url" alt="Image from AngularFireStorage">
                                   </div>
                                 </div> -->
-                  
-                                <div class="form-group">
-                                  <input type="text" class="form-control" formControlName="phoneNumber" value="{{user.phoneNumber}}">
-                                  <div class="mt-2 text-danger"></div>
-                                </div>
-                                
-                  
-                                <div class="col">
-                                  <div class="costum-tourist-part">
-                                    <div class="form-group">
-                                      <h6>What language do you speak? </h6>
-                                      <ng-select [multiple]="false" [items]="languages" class="form-control" [closeOnSelect]="true"
-                                        [(ngModel)]="selectedLanguage" formControlName="selectedLanguageForm" bindLabel="name">
-                                        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-                                          <div class="ng-value" *ngFor="let item of items | slice:0:2">
-                                            <span class="ng-value-label"> {{item}}</span>
-                                            <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">x</span>
-                                          </div>
-                                          <div class="ng-value" *ngIf="items.length > 2">
-                                            <span class="ng-value-label">{{items.length-2}} more ... </span>
-                                          </div>
-                                        </ng-template>
-                  
-                                        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                          <input id="item-{{index}}" type="radio" [checked]="item$.selected" />
-                                          {{item}}
-                                        </ng-template>
-                                      </ng-select>
-                                    </div>
-                  
-                  
-                                    <div class="form-group">
-                                      <h6>Group type: </h6>
-                                      <ng-select [multiple]="false" [items]="groupTypes" class="form-control" [closeOnSelect]="true"
-                                        [(ngModel)]="selectedGroupType" formControlName="selectedGroupType" bindLabel="name">
-                                        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-                                          <div class="ng-value" *ngFor="let item of items | slice:0:2">
-                                            <span class="ng-value-label"> {{item}}</span>
-                                            <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">x</span>
-                                          </div>
-                                          <div class="ng-value" *ngIf="items.length > 2">
-                                            <span class="ng-value-label">{{items.length-2}} more ... </span>
-                                          </div>
-                                        </ng-template>
-                  
-                                        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                          <input id="item-{{index}}" type="radio" [checked]="item$.selected" />
-                                          {{item}}
-                                        </ng-template>
-                                      </ng-select>
-                                    </div>
-                  
-                                    <div class="form-group">
-                                      <h6>Tourism type: </h6>
-                                      <ng-select [multiple]="false" [items]="tourismTypes" class="form-control" [closeOnSelect]="true"
-                                        [(ngModel)]="selectedType" formControlName="selectedTourismType" bindLabel="name">
-                                        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-                                          <div class="ng-value" *ngFor="let item of items | slice:0:2">
-                                            <span class="ng-value-label"> {{item}}</span>
-                                            <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">x</span>
-                                          </div>
-                                          <div class="ng-value" *ngIf="items.length > 2">
-                                            <span class="ng-value-label">{{items.length-2}} more ... </span>
-                                          </div>
-                                        </ng-template>
-                  
-                                        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                          <input id="item-{{index}}" type="radio" [checked]="item$.selected" />
-                                          {{item}}
-                                        </ng-template>
-                                      </ng-select>
-                                    </div>
-                  
-                                  </div>
-                  
-                                  <div class="form-group">
-                                    <button [disabled]="form.invalid" class="btn btn-primary submit-button" type="submit">Save Changes
-                                    </button>
-                                  </div>
-                                </div>
-                              </form>
-                            </div>
+
+                          <div class="form-group">
+                            <input type="text" class="form-control" formControlName="phoneNumber"
+                              value="{{user.phoneNumber}}">
+                            <div class="mt-2 text-danger"></div>
                           </div>
-                        </div>
+
+
+                          <div class="form-group">
+                            <p>What language do you speak? </p>
+                            <ng-select [multiple]="false" [items]="languages" class="form-control"
+                              [closeOnSelect]="true" [(ngModel)]="selectedLanguage"
+                              formControlName="selectedLanguageForm" bindLabel="name">
+                              <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                <div class="ng-value" *ngFor="let item of items | slice:0:2">
+                                  <span class="ng-value-label"> {{item}}</span>
+                                  <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">x</span>
+                                </div>
+                                <div class="ng-value" *ngIf="items.length > 2">
+                                  <span class="ng-value-label">{{items.length-2}} more ... </span>
+                                </div>
+                              </ng-template>
+
+                              <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="radio" [checked]="item$.selected" />
+                                {{item}}
+                              </ng-template>
+                            </ng-select>
+                          </div>
+
+
+                          <div class="form-group">
+                            <p>Group type: </p>
+                            <ng-select [multiple]="false" [items]="groupTypes" class="form-control"
+                              [closeOnSelect]="true" [(ngModel)]="selectedGroupType" formControlName="selectedGroupType"
+                              bindLabel="name">
+                              <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                <div class="ng-value" *ngFor="let item of items | slice:0:2">
+                                  <span class="ng-value-label"> {{item}}</span>
+                                  <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">x</span>
+                                </div>
+                                <div class="ng-value" *ngIf="items.length > 2">
+                                  <span class="ng-value-label">{{items.length-2}} more ... </span>
+                                </div>
+                              </ng-template>
+
+                              <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="radio" [checked]="item$.selected" />
+                                {{item}}
+                              </ng-template>
+                            </ng-select>
+                          </div>
+
+                          <div class="form-group">
+                            <p>Tourism type: </p>
+                            <ng-select [multiple]="false" [items]="tourismTypes" class="form-control"
+                              [closeOnSelect]="true" [(ngModel)]="selectedType" formControlName="selectedTourismType"
+                              bindLabel="name">
+                              <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                <div class="ng-value" *ngFor="let item of items | slice:0:2">
+                                  <span class="ng-value-label"> {{item}}</span>
+                                  <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">x</span>
+                                </div>
+                                <div class="ng-value" *ngIf="items.length > 2">
+                                  <span class="ng-value-label">{{items.length-2}} more ... </span>
+                                </div>
+                              </ng-template>
+
+                              <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="radio" [checked]="item$.selected" />
+                                {{item}}
+                              </ng-template>
+                            </ng-select>
+                          </div>
+
+
+
+                          <div class="form-group">
+                            <button [disabled]="form.invalid" class="btn btn-primary submit-button" type="submit">Save
+                              Changes
+                            </button>
+                          </div>
+
+                        </form>
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   </div>
- <ng-template #matDialog>
-    <h1 mat-dialog-title>Saved!</h1>
-    <div mat-dialog-content>All your changes have been changes. You are now directed to home page</div>
-    <div mat-dialog-actions>
-      <button mat-button mat-dialog-close (click)="gotoHomePage()">Ok</button>
-    </div>
- </ng-template>
+</div>
+<ng-template #matDialog>
+  <h1 mat-dialog-title>Saved!</h1>
+  <div mat-dialog-content>All your changes have been changes. You are now directed to home page</div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="gotoHomePage()">Ok</button>
+  </div>
+</ng-template>

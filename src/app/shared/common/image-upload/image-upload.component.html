@@ -1,27 +1,24 @@
-<div class="container">
-    <div class="fill-style-1 displayTable displayTableCell authBlock">
-        <form [formGroup]="_uploadForm" (ngSubmit)="upload()">
-            <div class="image-preview" *ngIf="imgUrl">
-                <img [src]="imgUrl" style="width:400px; height:250px">
-            </div>
+<div class="fill-style-1 displayTable displayTableCell authBlock">
+    <form [formGroup]="_uploadForm">
+        <div class="image-preview" *ngIf="imgUrl">
+            <img [src]="imgUrl" style="width:400px; height:250px">
+        </div>
 
-            <div class="form-group">
-                <label for="file"></label>
-                <input type="file" class="form-control" id="file" formControlName="file"
-                    (change)="onImageChange($event)">
-                <div *ngIf="uploadForm.file.touched && uploadForm.file.invalid" class="alert alert-danger">
-                    <div *ngIf="uploadForm.file.errors.required">Image file is required.</div>
-                </div>
+        <div class="form-group">
+            <label for="file"></label>
+            <input type="file" class="form-control" id="file" formControlName="file" (change)="onImageChange($event)">
+            <div *ngIf="uploadForm.file.touched && uploadForm.file.invalid" class="alert alert-danger">
+                <div *ngIf="uploadForm.file.errors.required">Image file is required.</div>
             </div>
+        </div>
 
-            <div class="error" *ngIf="fileFormat">
-                <span>The file must be an image file format</span>
-            </div>
+        <div class="error" *ngIf="fileFormat">
+            <span>The file must be an image file format</span>
+        </div>
 
-            <div class="error" *ngIf="fileIsNull">
-                <span>You can not upload an empty file</span>
-            </div>
-            <button class="btn btn-success center" type="submit">Upload File</button>
-        </form>
-    </div>
+        <div class="error" *ngIf="fileIsNull">
+            <span>You can not upload an empty file</span>
+        </div>
+        <button mat-flat-button color="primary" (click)="upload()" type="submit">Upload File</button>
+    </form>
 </div>

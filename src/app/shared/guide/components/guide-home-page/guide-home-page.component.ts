@@ -20,7 +20,6 @@ export class GuideHomePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.guideService.guideData.subscribe( (guide: Guide) => {
-      console.log(guide);
       this.guide = guide;
       this.rate = guide.stars;
     })
@@ -29,7 +28,6 @@ export class GuideHomePageComponent implements OnInit {
       let photoUid = this.authService.generateUid(user.firstName, user.lastName);
       let ref: AngularFireStorageReference = this.authService.afStorage.ref('/images/' + photoUid);
       ref.getDownloadURL().subscribe(res => {
-        console.log(res);
         this.photoURL = res;
         this.isLoading = false;
       })
